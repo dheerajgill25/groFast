@@ -1,0 +1,165 @@
+{
+  "schema_version": "0.4",
+  "plugin_version": "0.0.0",
+  "project_version": "v1",
+  "prior_versions": [],
+  "imported_kb_paths": [],
+  "project": {
+    "name": "GroFast",
+    "id": "grofast",
+    "type": "greenfield",
+    "lead": "Devendra Sharma",
+    "objective": "Zepto-style hyperlocal grocery delivery platform (hybrid: dark stores + local store marketplace) with ultra-fast ordering, real-time tracking, secure payments, inventory management, and analytics",
+    "created_at": "2026-07-10T07:22:19Z"
+  },
+  "current_phase": [
+    "05_development"
+  ],
+  "phases": {
+    "00_kb": {
+      "status": "frozen",
+      "started_at": "2026-07-10T07:27:51Z",
+      "frozen_at": "2026-07-10T07:27:51Z",
+      "duration_minutes": 0,
+      "reviewer": "Devendra Sharma",
+      "artifact_md": "project-docs/00_kb.md",
+      "artifact_human": null
+    },
+    "01_brs": {
+      "status": "frozen",
+      "started_at": "2026-07-10T07:28:10Z",
+      "frozen_at": "2026-07-10T07:34:46Z",
+      "duration_minutes": 6,
+      "reviewer": "Devendra Sharma",
+      "artifact_md": "project-docs/01_brs.md",
+      "artifact_human": "project-docs/_readable/01_brs.pdf"
+    },
+    "02a_screens": {
+      "status": "frozen",
+      "started_at": "2026-07-10T07:35:00Z",
+      "frozen_at": "2026-07-10T07:48:14Z",
+      "duration_minutes": 13,
+      "reviewer": "Devendra Sharma",
+      "artifact_md": "project-docs/02a_screens.md",
+      "artifact_human": "project-docs/_readable/02a_screens.pdf"
+    },
+    "02b_architecture": {
+      "status": "frozen",
+      "started_at": "2026-07-10T07:35:01Z",
+      "frozen_at": "2026-07-10T07:46:40Z",
+      "duration_minutes": 11,
+      "reviewer": "Devendra Sharma",
+      "artifact_md": "project-docs/02b_architecture.md",
+      "artifact_human": "project-docs/_readable/02b_architecture.html"
+    },
+    "03a_designer_prompts": {
+      "status": "frozen",
+      "started_at": "2026-07-10T07:49:12Z",
+      "frozen_at": "2026-07-10T08:06:45Z",
+      "duration_minutes": 17,
+      "reviewer": "Devendra Sharma",
+      "artifact_md": "project-docs/03a_designer_prompts.md",
+      "artifact_human": null
+    },
+    "03b_test_cases": {
+      "status": "frozen",
+      "started_at": "2026-07-10T07:49:13Z",
+      "frozen_at": "2026-07-10T08:06:46Z",
+      "duration_minutes": 17,
+      "reviewer": "Devendra Sharma",
+      "artifact_md": "project-docs/03b_test_cases.md",
+      "artifact_human": "project-docs/_readable/03b_test_cases.xlsx"
+    },
+    "04a_design": {
+      "status": "frozen",
+      "started_at": "2026-07-10T08:53:26Z",
+      "frozen_at": "2026-07-17T09:36:18Z",
+      "duration_minutes": 10122,
+      "reviewer": "Devendra Sharma",
+      "artifact_md": "project-docs/04a_design.md",
+      "artifact_human": null
+    },
+    "04b_task_breakdown": {
+      "status": "frozen",
+      "started_at": "2026-07-10T08:53:25Z",
+      "frozen_at": "2026-07-17T09:36:25Z",
+      "duration_minutes": 10123,
+      "reviewer": "Devendra Sharma",
+      "artifact_md": "project-docs/04b_task_breakdown.md",
+      "artifact_human": "project-docs/_readable/04b_task_breakdown.xlsx"
+    },
+    "05_development": {
+      "status": "in_progress",
+      "started_at": "2026-07-17T09:37:48Z",
+      "frozen_at": null,
+      "duration_minutes": null,
+      "reviewer": null,
+      "artifact_md": "05_development.md",
+      "artifact_human": null
+    },
+    "06_testing": {
+      "status": "not_started",
+      "started_at": null,
+      "frozen_at": null,
+      "duration_minutes": null,
+      "reviewer": null,
+      "artifact_md": null,
+      "artifact_human": null
+    },
+    "07_code_review": {
+      "status": "blocked",
+      "started_at": null,
+      "frozen_at": null,
+      "duration_minutes": null,
+      "reviewer": null,
+      "artifact_md": null,
+      "artifact_human": null,
+      "blocked_by": [
+        "06_testing"
+      ]
+    },
+    "08_release": {
+      "status": "blocked",
+      "started_at": null,
+      "frozen_at": null,
+      "duration_minutes": null,
+      "reviewer": null,
+      "artifact_md": null,
+      "artifact_human": null,
+      "blocked_by": [
+        "07_code_review"
+      ]
+    }
+  },
+  "fix_loop": {
+    "active": false,
+    "iterations": 0,
+    "open_fix_packets": [],
+    "resolved_fix_packets": []
+  },
+  "open_items": {
+    "count": 0,
+    "by_phase": {}
+  },
+  "thread_status": {
+    "design_thread": "frozen",
+    "build_thread": "frozen"
+  },
+  "themes": {
+    "E01-Th01": {
+      "status": "awaiting_review",
+      "title": "Repository, CI/CD & infrastructure-as-code",
+      "stories": [
+        "E01-Th01-S01",
+        "E01-Th01-S02"
+      ],
+      "story_overrides": {},
+      "revisions": [],
+      "approved_at": "2026-07-17T09:40:47Z",
+      "reviewer": "Devendra Sharma",
+      "review_requested_at": "2026-07-17T09:43:02Z"
+    }
+  },
+  "change_requests": {},
+  "last_updated": "2026-07-17T09:43:02Z"
+}

@@ -1,0 +1,9 @@
+{
+  "name": "@grofast/mobile-rider",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Rider app (React Native) — screens SC-021..SC-027. Implemented in E06-Th03.",
+  "scripts": {
+    "test": "echo \"no tests yet — E06-Th03\" && exit 0"
+  }
+}

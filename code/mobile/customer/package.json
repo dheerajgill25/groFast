@@ -1,0 +1,9 @@
+{
+  "name": "@grofast/mobile-customer",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Customer mobile app (React Native) — screens SC-001..SC-020. Implemented in E06-Th01.",
+  "scripts": {
+    "test": "echo \"no tests yet — E06-Th01\" && exit 0"
+  }
+}

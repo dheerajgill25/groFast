@@ -1,0 +1,5 @@
+packages:
+  - "code/backend"
+  - "code/frontend/*"
+  - "code/mobile/*"
+  - "packages/*"
