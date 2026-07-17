@@ -1,6 +1,6 @@
 # Brief index — GroFast
 
-_Generated 2026-07-17T09:37:43Z._ Mode: **strict**.
+_Generated 2026-07-17T10:35:30Z._ Mode: **strict**.
 
 Read `00_PROJECT_OVERVIEW.md` once at session start, then this file to find the next eligible item, then the per-task / per-story brief.
 
@@ -11,7 +11,7 @@ Read `00_PROJECT_OVERVIEW.md` once at session start, then this file to find the 
 
 ### E01-Th01-S01 — As an engineer, I want a monorepo with enforced module seams and a green pipeline, so that every later task lands on a working, checked baseline
 
-- ⏳ `E01-Th01-S01-T01` — Monorepo scaffold  [inherit]
+- ✅ `E01-Th01-S01-T01` — Monorepo scaffold  [inherit]
 - ⏳ `E01-Th01-S01-T02` — Module boundary lint + shared contracts  [inherit] deps: E01-Th01-S01-T01
 - ⏳ `E01-Th01-S01-T03` — CI pipeline for PRs  [inherit] deps: E01-Th01-S01-T02
 - ⏳ `E01-Th01-S01-T04` — Container build, registry & supply-chain scan  [inherit] deps: E01-Th01-S01-T03

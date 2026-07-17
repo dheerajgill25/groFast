@@ -11,8 +11,50 @@ A module may import from another module **only** through that module's public
 surface — its `index.ts` barrel. Reaching into `../orders/internal/...`, or
 querying another module's tables directly, is a lint error.
 
-Anything genuinely shared goes in `@grofast/types` (contracts) or
-`src/shared/` (infrastructure primitives).
+Anything genuinely shared goes in `@grofast/contracts` (wire/DTO schemas),
+`@grofast/types` (cross-boundary primitives), or `src/shared/` (infrastructure).
+
+### Code boundaries
+
+```
+modules/orders/
+├── index.ts        ← public surface. Other modules may import THIS.
+└── internal/       ← private. Unreachable from outside. Enforced by lint.
+```
+
+Enforced by `import/no-restricted-paths` in `eslint.config.mjs`, and asserted by
+`boundaries.test.ts`, which lints a deliberately-illegal fixture and fails if the
+rule *doesn't* fire. That test exists because a boundary rule that silently
+matches nothing is worse than none — it buys false confidence. It caught exactly
+that during T02: the rule was inert until an import resolver was configured.
+
+Adding a module means adding it to the `MODULES` array in `eslint.config.mjs`.
+Miss that step and your module has no seam.
+
+### Database boundaries — schema per module
+
+The seam is not just imports. Per 02b, each module owns a **Postgres schema**
+named after it, and owns every table inside it:
+
+```sql
+CREATE SCHEMA orders;
+CREATE TABLE orders.order (...);
+CREATE TABLE orders.order_item (...);
+```
+
+Rules:
+
+1. **A module reads and writes only its own schema.** No joins across schemas.
+   Need another module's data? Call its public API, or consume its events.
+2. **No foreign keys across schemas.** Reference by ID; enforce the invariant in
+   application code or via an event. An FK across a seam is a service extraction
+   that can't happen without a migration you'll be scared to run.
+3. **Migrations live with their module** and touch only its schema.
+4. **The DB user per deployable gets grants per schema**, so the boundary is
+   enforced by Postgres too, not only by review (lands with E01-Th01-S02-T03).
+
+This is the same trade the code boundaries make: a little friction now buys the
+option to extract a service later without a rewrite.
 
 ## Why this matters
 
@@ -20,6 +62,10 @@ Anything genuinely shared goes in `@grofast/types` (contracts) or
 dispatch + tracking → payments → partner ingestion → notifications. That
 sequence is only cheap if the seams are honest today. Every cross-module
 shortcut taken now is a service extraction that fails later.
+
+The realistic failure mode isn't one dramatic violation — it's fifty small,
+individually-reasonable ones, each shipped under deadline. That's why this is
+lint and not a guideline.
 
 ## Modules
 
@@ -40,6 +86,6 @@ shortcut taken now is a service extraction that fails later.
 | `audit` | Immutable audit log for money/stock mutations | FR-29, NFR-10 |
 | `admin` | RBAC, ops surfaces, reporting reads | FR-25, FR-26, FR-27, FR-29 |
 
-Each module's own tasks fill in its `index.ts`, service, and persistence. This
-scaffold task (`E01-Th01-S01-T01`) creates only the directories and this
-contract.
+Each module's own tasks fill in its `index.ts`, service, and persistence.
+`E01-Th01-S01-T01` created the directories; `E01-Th01-S01-T02` added the
+enforced boundaries, the barrels, and the `@grofast/contracts` package.

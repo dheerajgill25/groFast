@@ -38,6 +38,9 @@ importers:
 
   code/backend:
     dependencies:
+      '@grofast/contracts':
+        specifier: workspace:*
+        version: link:../../packages/contracts
       '@grofast/types':
         specifier: workspace:*
         version: link:../../packages/types
@@ -69,6 +72,9 @@ importers:
       '@types/node':
         specifier: ^22.10.2
         version: 22.20.1
+      eslint:
+        specifier: ^9.17.0
+        version: 9.39.5
       typescript:
         specifier: ^5.7.2
         version: 5.9.3
@@ -83,6 +89,22 @@ importers:
   code/mobile/customer: {}
 
   code/mobile/rider: {}
+
+  packages/contracts:
+    dependencies:
+      '@grofast/types':
+        specifier: workspace:*
+        version: link:../types
+      zod:
+        specifier: ^3.24.1
+        version: 3.25.76
+    devDependencies:
+      typescript:
+        specifier: ^5.7.2
+        version: 5.9.3
+      vitest:
+        specifier: ^2.1.8
+        version: 2.1.9(@types/node@22.20.1)(terser@5.49.0)
 
   packages/design-system:
     devDependencies:
@@ -2830,6 +2852,9 @@ packages:
   yocto-queue@0.1.0:
     resolution: {integrity: sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==}
     engines: {node: '>=10'}
+
+  zod@3.25.76:
+    resolution: {integrity: sha512-gzUt/qt81nXsFGKIFcC3YnfEAx5NkunCfnDlvuBSSFS02bcXu4Lmea0AFIUwbLWxWPx3d9p8S5QoaujKcNQxcQ==}
 
 snapshots:
 
@@ -5796,3 +5821,5 @@ snapshots:
   yargs-parser@21.1.1: {}
 
   yocto-queue@0.1.0: {}
+
+  zod@3.25.76: {}
