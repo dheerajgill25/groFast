@@ -59,7 +59,7 @@ make db-reset
 
 | Task ID | PR | Merged | Tests linked | Tests passing |
 |---------|-----|--------|--------------|----------------|
-| E01-Th01-S01-T01 | #__ | yes/no | TC-FUNC-001 | yes/no |
+| E01-Th01-S01-T01 | #1 | yes | TC-INT-021, TC-SEC-004 | yes |
 
 ## 8. Open follow-ups
 

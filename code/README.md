@@ -40,7 +40,8 @@ grofast/
 ├── tsconfig.base.json     ← strict TS, inherited by every project
 ├── eslint.config.mjs
 ├── packages/
-│   ├── types/             @grofast/types           — cross-boundary contracts
+│   ├── types/             @grofast/types           — cross-boundary primitives
+│   ├── contracts/         @grofast/contracts       — zod wire schemas + DTOs (backend & clients)
 │   └── design-system/     @grofast/design-system   — ratified tokens (04a §1) + INR formatting
 └── code/
     ├── CLAUDE.md          ← READ FIRST if you're an AI dev tool
@@ -78,8 +79,14 @@ grouping (`₹1,23,456`) and the paise-only-when-non-zero rule are non-obvious a
 centrally tested. Don't reach for `toLocaleString`.
 
 **The monolith has real seams.** `code/backend/src/modules/` are enforced
-boundaries, not just folders. Read `code/backend/src/modules/README.md` before
-adding any cross-module import — 02b §4 depends on those seams staying honest.
+boundaries, not just folders — cross-module reach-ins fail lint, and each module
+owns its own Postgres schema with no cross-schema joins or FKs. Read
+`code/backend/src/modules/README.md` before adding any cross-module import;
+02b §4 depends on those seams staying honest.
+
+**Wire shapes live in `@grofast/contracts`.** One zod schema per shape, shared by
+the backend and every client — the backend validates with it, clients infer
+types from it, and there's no drift between the two.
 
 ## Setup
 
