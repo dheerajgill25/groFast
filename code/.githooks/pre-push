@@ -1,0 +1,41 @@
+#!/usr/bin/env bash
+# pre-push hook — validates branch name + warns on missing PR title format
+#
+# Install with: git config core.hooksPath .githooks
+#
+# Reject branches that don't match: task/E##-Th##-S##-T##-<slug>
+# (also allows: main, master, dev, fix/<slug>, hotfix/<slug>, chore/<slug>, docs/<slug>)
+
+set -euo pipefail
+
+branch=$(git rev-parse --abbrev-ref HEAD)
+
+case "$branch" in
+  main|master|dev|develop)
+    exit 0 ;;
+  fix/*|hotfix/*|chore/*|docs/*|release/*)
+    exit 0 ;;
+esac
+
+# Task branches must follow the pattern
+if [[ "$branch" =~ ^task/E[0-9]{2}-Th[0-9]{2}-S[0-9]{2}-T[0-9]{2}-[a-z0-9-]+$ ]]; then
+  exit 0
+fi
+
+cat >&2 <<EOF
+❌ Branch name does not match the required pattern.
+
+  Branch:   $branch
+  Expected: task/E##-Th##-S##-T##-<slug>
+  Example:  task/E01-Th01-S01-T02-wire-signup-form
+
+  Or one of: main, master, dev, develop, fix/*, hotfix/*, chore/*, docs/*, release/*
+
+  Rename the branch:
+    git branch -m <new-name>
+
+  Or override (NOT recommended):
+    git push --no-verify
+EOF
+
+exit 1

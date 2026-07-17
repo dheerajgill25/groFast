@@ -1,0 +1,2743 @@
+{
+  "schema_version": "0.4",
+  "built_at": "2026-07-17T09:36:25Z",
+  "nodes": [
+    {
+      "id": "FR-1",
+      "type": "fr",
+      "file": "01_brs.md",
+      "title": "Phone-OTP signup/login"
+    },
+    {
+      "id": "FR-2",
+      "type": "fr",
+      "file": "01_brs.md",
+      "title": "Address book & location detection"
+    },
+    {
+      "id": "FR-3",
+      "type": "fr",
+      "file": "01_brs.md",
+      "title": "Serviceability check"
+    },
+    {
+      "id": "FR-4",
+      "type": "fr",
+      "file": "01_brs.md",
+      "title": "Browse catalog by category"
+    },
+    {
+      "id": "FR-5",
+      "type": "fr",
+      "file": "01_brs.md",
+      "title": "Product search with typo tolerance"
+    },
+    {
+      "id": "FR-6",
+      "type": "fr",
+      "file": "01_brs.md",
+      "title": "Product detail page"
+    },
+    {
+      "id": "FR-7",
+      "type": "fr",
+      "file": "01_brs.md",
+      "title": "Cart management"
+    },
+    {
+      "id": "FR-8",
+      "type": "fr",
+      "file": "01_brs.md",
+      "title": "ETA promise at checkout"
+    },
+    {
+      "id": "FR-9",
+      "type": "fr",
+      "file": "01_brs.md",
+      "title": "Fees, coupons & bill summary"
+    },
+    {
+      "id": "FR-10",
+      "type": "fr",
+      "file": "01_brs.md",
+      "title": "Online payment"
+    },
+    {
+      "id": "FR-11",
+      "type": "fr",
+      "file": "01_brs.md",
+      "title": "Cash on delivery"
+    },
+    {
+      "id": "FR-12",
+      "type": "fr",
+      "file": "01_brs.md",
+      "title": "Order placement & stock reservation"
+    },
+    {
+      "id": "FR-13",
+      "type": "fr",
+      "file": "01_brs.md",
+      "title": "Real-time order tracking"
+    },
+    {
+      "id": "FR-14",
+      "type": "fr",
+      "file": "01_brs.md",
+      "title": "Order cancellation & refunds"
+    },
+    {
+      "id": "FR-15",
+      "type": "fr",
+      "file": "01_brs.md",
+      "title": "Order history & reorder"
+    },
+    {
+      "id": "FR-16",
+      "type": "fr",
+      "file": "01_brs.md",
+      "title": "Ratings & delivery feedback"
+    },
+    {
+      "id": "FR-17",
+      "type": "fr",
+      "file": "01_brs.md",
+      "title": "Picker pick-list workflow"
+    },
+    {
+      "id": "FR-18",
+      "type": "fr",
+      "file": "01_brs.md",
+      "title": "Rider job offer & assignment"
+    },
+    {
+      "id": "FR-19",
+      "type": "fr",
+      "file": "01_brs.md",
+      "title": "Rider pickup & delivery flow"
+    },
+    {
+      "id": "FR-20",
+      "type": "fr",
+      "file": "01_brs.md",
+      "title": "Rider availability & earnings view"
+    },
+    {
+      "id": "FR-21",
+      "type": "fr",
+      "file": "01_brs.md",
+      "title": "Catalog & SKU management (admin)"
+    },
+    {
+      "id": "FR-22",
+      "type": "fr",
+      "file": "01_brs.md",
+      "title": "Dark-store inventory management"
+    },
+    {
+      "id": "FR-23",
+      "type": "fr",
+      "file": "01_brs.md",
+      "title": "Partner-store onboarding & stock sync"
+    },
+    {
+      "id": "FR-24",
+      "type": "fr",
+      "file": "01_brs.md",
+      "title": "Zone & ETA configuration"
+    },
+    {
+      "id": "FR-25",
+      "type": "fr",
+      "file": "01_brs.md",
+      "title": "Live ops dashboard & exception queue"
+    },
+    {
+      "id": "FR-26",
+      "type": "fr",
+      "file": "01_brs.md",
+      "title": "Order management (admin)"
+    },
+    {
+      "id": "FR-27",
+      "type": "fr",
+      "file": "01_brs.md",
+      "title": "Analytics & reports"
+    },
+    {
+      "id": "FR-28",
+      "type": "fr",
+      "file": "01_brs.md",
+      "title": "Notifications engine"
+    },
+    {
+      "id": "FR-29",
+      "type": "fr",
+      "file": "01_brs.md",
+      "title": "RBAC for admin"
+    },
+    {
+      "id": "FR-30",
+      "type": "fr",
+      "file": "01_brs.md",
+      "title": "Substitution & partial fulfillment"
+    },
+    {
+      "id": "SC-002",
+      "type": "screen",
+      "file": "02a_screens.md",
+      "title": ""
+    },
+    {
+      "id": "SC-026",
+      "type": "screen",
+      "file": "02a_screens.md",
+      "title": ""
+    },
+    {
+      "id": "SC-024",
+      "type": "screen",
+      "file": "02a_screens.md",
+      "title": ""
+    },
+    {
+      "id": "SC-004",
+      "type": "screen",
+      "file": "02a_screens.md",
+      "title": ""
+    },
+    {
+      "id": "SC-017",
+      "type": "screen",
+      "file": "02a_screens.md",
+      "title": ""
+    },
+    {
+      "id": "SC-032",
+      "type": "screen",
+      "file": "02a_screens.md",
+      "title": ""
+    },
+    {
+      "id": "SC-003",
+      "type": "screen",
+      "file": "02a_screens.md",
+      "title": ""
+    },
+    {
+      "id": "SC-029",
+      "type": "screen",
+      "file": "02a_screens.md",
+      "title": ""
+    },
+    {
+      "id": "SC-040",
+      "type": "screen",
+      "file": "02a_screens.md",
+      "title": ""
+    },
+    {
+      "id": "SC-044",
+      "type": "screen",
+      "file": "02a_screens.md",
+      "title": ""
+    },
+    {
+      "id": "SC-034",
+      "type": "screen",
+      "file": "02a_screens.md",
+      "title": ""
+    },
+    {
+      "id": "SC-009",
+      "type": "screen",
+      "file": "02a_screens.md",
+      "title": ""
+    },
+    {
+      "id": "SC-015",
+      "type": "screen",
+      "file": "02a_screens.md",
+      "title": ""
+    },
+    {
+      "id": "SC-038",
+      "type": "screen",
+      "file": "02a_screens.md",
+      "title": ""
+    },
+    {
+      "id": "SC-033",
+      "type": "screen",
+      "file": "02a_screens.md",
+      "title": ""
+    },
+    {
+      "id": "SC-012",
+      "type": "screen",
+      "file": "02a_screens.md",
+      "title": ""
+    },
+    {
+      "id": "SC-043",
+      "type": "screen",
+      "file": "02a_screens.md",
+      "title": ""
+    },
+    {
+      "id": "SC-037",
+      "type": "screen",
+      "file": "02a_screens.md",
+      "title": ""
+    },
+    {
+      "id": "SC-045",
+      "type": "screen",
+      "file": "02a_screens.md",
+      "title": ""
+    },
+    {
+      "id": "SC-025",
+      "type": "screen",
+      "file": "02a_screens.md",
+      "title": ""
+    },
+    {
+      "id": "SC-014",
+      "type": "screen",
+      "file": "02a_screens.md",
+      "title": ""
+    },
+    {
+      "id": "SC-023",
+      "type": "screen",
+      "file": "02a_screens.md",
+      "title": ""
+    },
+    {
+      "id": "SC-036",
+      "type": "screen",
+      "file": "02a_screens.md",
+      "title": ""
+    },
+    {
+      "id": "SC-041",
+      "type": "screen",
+      "file": "02a_screens.md",
+      "title": ""
+    },
+    {
+      "id": "SC-028",
+      "type": "screen",
+      "file": "02a_screens.md",
+      "title": ""
+    },
+    {
+      "id": "SC-018",
+      "type": "screen",
+      "file": "02a_screens.md",
+      "title": ""
+    },
+    {
+      "id": "SC-001",
+      "type": "screen",
+      "file": "02a_screens.md",
+      "title": ""
+    },
+    {
+      "id": "SC-035",
+      "type": "screen",
+      "file": "02a_screens.md",
+      "title": ""
+    },
+    {
+      "id": "SC-013",
+      "type": "screen",
+      "file": "02a_screens.md",
+      "title": ""
+    },
+    {
+      "id": "SC-027",
+      "type": "screen",
+      "file": "02a_screens.md",
+      "title": ""
+    },
+    {
+      "id": "SC-006",
+      "type": "screen",
+      "file": "02a_screens.md",
+      "title": ""
+    },
+    {
+      "id": "SC-011",
+      "type": "screen",
+      "file": "02a_screens.md",
+      "title": ""
+    },
+    {
+      "id": "SC-039",
+      "type": "screen",
+      "file": "02a_screens.md",
+      "title": ""
+    },
+    {
+      "id": "SC-020",
+      "type": "screen",
+      "file": "02a_screens.md",
+      "title": ""
+    },
+    {
+      "id": "SC-007",
+      "type": "screen",
+      "file": "02a_screens.md",
+      "title": ""
+    },
+    {
+      "id": "SC-042",
+      "type": "screen",
+      "file": "02a_screens.md",
+      "title": ""
+    },
+    {
+      "id": "SC-021",
+      "type": "screen",
+      "file": "02a_screens.md",
+      "title": ""
+    },
+    {
+      "id": "SC-005",
+      "type": "screen",
+      "file": "02a_screens.md",
+      "title": ""
+    },
+    {
+      "id": "SC-031",
+      "type": "screen",
+      "file": "02a_screens.md",
+      "title": ""
+    },
+    {
+      "id": "SC-008",
+      "type": "screen",
+      "file": "02a_screens.md",
+      "title": ""
+    },
+    {
+      "id": "SC-010",
+      "type": "screen",
+      "file": "02a_screens.md",
+      "title": ""
+    },
+    {
+      "id": "SC-030",
+      "type": "screen",
+      "file": "02a_screens.md",
+      "title": ""
+    },
+    {
+      "id": "SC-019",
+      "type": "screen",
+      "file": "02a_screens.md",
+      "title": ""
+    },
+    {
+      "id": "SC-022",
+      "type": "screen",
+      "file": "02a_screens.md",
+      "title": ""
+    },
+    {
+      "id": "SC-016",
+      "type": "screen",
+      "file": "02a_screens.md",
+      "title": ""
+    },
+    {
+      "id": "C-1",
+      "type": "component",
+      "file": "02b_architecture.md",
+      "title": "Customer mobile app (Android+iOS, React Native)"
+    },
+    {
+      "id": "C-2",
+      "type": "component",
+      "file": "02b_architecture.md",
+      "title": "Customer web (Next.js)"
+    },
+    {
+      "id": "C-3",
+      "type": "component",
+      "file": "02b_architecture.md",
+      "title": "Rider app (Android, React Native)"
+    },
+    {
+      "id": "C-4",
+      "type": "component",
+      "file": "02b_architecture.md",
+      "title": "Admin + ops dashboard (React SPA)"
+    },
+    {
+      "id": "C-5",
+      "type": "component",
+      "file": "02b_architecture.md",
+      "title": "CDN + WAF edge"
+    },
+    {
+      "id": "C-6",
+      "type": "component",
+      "file": "02b_architecture.md",
+      "title": "API gateway / BFF"
+    },
+    {
+      "id": "C-7",
+      "type": "component",
+      "file": "02b_architecture.md",
+      "title": "`grofast-core` (modular monolith)"
+    },
+    {
+      "id": "C-8",
+      "type": "component",
+      "file": "02b_architecture.md",
+      "title": "Realtime gateway"
+    },
+    {
+      "id": "C-9",
+      "type": "component",
+      "file": "02b_architecture.md",
+      "title": "Worker pool"
+    },
+    {
+      "id": "C-10",
+      "type": "component",
+      "file": "02b_architecture.md",
+      "title": "PostgreSQL 16 + PostGIS"
+    },
+    {
+      "id": "C-11",
+      "type": "component",
+      "file": "02b_architecture.md",
+      "title": "Redis 7"
+    },
+    {
+      "id": "C-12",
+      "type": "component",
+      "file": "02b_architecture.md",
+      "title": "Meilisearch"
+    },
+    {
+      "id": "C-13",
+      "type": "component",
+      "file": "02b_architecture.md",
+      "title": "Redpanda"
+    },
+    {
+      "id": "C-14",
+      "type": "component",
+      "file": "02b_architecture.md",
+      "title": "Object storage"
+    },
+    {
+      "id": "C-15",
+      "type": "component",
+      "file": "02b_architecture.md",
+      "title": "Analytics warehouse (ClickHouse-class)"
+    },
+    {
+      "id": "C-16",
+      "type": "component",
+      "file": "02b_architecture.md",
+      "title": "Payment gateway ([OPEN] \u2014 Razorpay-class)"
+    },
+    {
+      "id": "C-17",
+      "type": "component",
+      "file": "02b_architecture.md",
+      "title": "SMS / DLT provider"
+    },
+    {
+      "id": "C-18",
+      "type": "component",
+      "file": "02b_architecture.md",
+      "title": "FCM / APNs"
+    },
+    {
+      "id": "C-19",
+      "type": "component",
+      "file": "02b_architecture.md",
+      "title": "Maps provider ([OPEN])"
+    },
+    {
+      "id": "TC-FUNC-001",
+      "type": "test-case",
+      "file": "03b_test_cases.md",
+      "title": "Phone-OTP login succeeds"
+    },
+    {
+      "id": "TC-FUNC-002",
+      "type": "test-case",
+      "file": "03b_test_cases.md",
+      "title": "Session persists via refresh rotation"
+    },
+    {
+      "id": "TC-FUNC-003",
+      "type": "test-case",
+      "file": "03b_test_cases.md",
+      "title": "GPS auto-detect resolves address + serving store"
+    },
+    {
+      "id": "TC-FUNC-004",
+      "type": "test-case",
+      "file": "03b_test_cases.md",
+      "title": "Save address with label/floor/landmark"
+    },
+    {
+      "id": "TC-FUNC-005",
+      "type": "test-case",
+      "file": "03b_test_cases.md",
+      "title": "Serviceable location gets storefront"
+    },
+    {
+      "id": "TC-FUNC-006",
+      "type": "test-case",
+      "file": "03b_test_cases.md",
+      "title": "Category browse shows only in-stock priced items of serving store"
+    },
+    {
+      "id": "TC-FUNC-007",
+      "type": "test-case",
+      "file": "03b_test_cases.md",
+      "title": "Typo-tolerant search ranks flours for atta/aata/attaa"
+    },
+    {
+      "id": "TC-FUNC-008",
+      "type": "test-case",
+      "file": "03b_test_cases.md",
+      "title": "PDP shows correct price/discount/pack/availability"
+    },
+    {
+      "id": "TC-FUNC-009",
+      "type": "test-case",
+      "file": "03b_test_cases.md",
+      "title": "Cart add/step/remove with cross-device persistence"
+    },
+    {
+      "id": "TC-FUNC-010",
+      "type": "test-case",
+      "file": "03b_test_cases.md",
+      "title": "ETA promise displayed at checkout and stored on order"
+    },
+    {
+      "id": "TC-FUNC-011",
+      "type": "test-case",
+      "file": "03b_test_cases.md",
+      "title": "Flat and percent coupons compute correctly"
+    },
+    {
+      "id": "TC-FUNC-012",
+      "type": "test-case",
+      "file": "03b_test_cases.md",
+      "title": "GST-compliant invoice generated on delivery"
+    },
+    {
+      "id": "TC-FUNC-013",
+      "type": "test-case",
+      "file": "03b_test_cases.md",
+      "title": "UPI payment success confirms order < 3 s"
+    },
+    {
+      "id": "TC-FUNC-014",
+      "type": "test-case",
+      "file": "03b_test_cases.md",
+      "title": "Server-verified capture: verify-call and webhook both idempotent"
+    },
+    {
+      "id": "TC-FUNC-015",
+      "type": "test-case",
+      "file": "03b_test_cases.md",
+      "title": "[COND-COD \u00a713] COD order within cap placed; rider sees collect amount"
+    },
+    {
+      "id": "TC-FUNC-016",
+      "type": "test-case",
+      "file": "03b_test_cases.md",
+      "title": "Atomic reservation across all lines at payment confirmation"
+    },
+    {
+      "id": "TC-FUNC-017",
+      "type": "test-case",
+      "file": "03b_test_cases.md",
+      "title": "Live tracking updates \u2264 5 s with instant status pushes"
+    },
+    {
+      "id": "TC-FUNC-018",
+      "type": "test-case",
+      "file": "03b_test_cases.md",
+      "title": "Cancel before dispatch releases stock and auto-refunds"
+    },
+    {
+      "id": "TC-FUNC-019",
+      "type": "test-case",
+      "file": "03b_test_cases.md",
+      "title": "One-tap reorder with unavailable items flagged"
+    },
+    {
+      "id": "TC-FUNC-020",
+      "type": "test-case",
+      "file": "03b_test_cases.md",
+      "title": "Low rating triggers reason picker and ops exception"
+    },
+    {
+      "id": "TC-FUNC-021",
+      "type": "test-case",
+      "file": "03b_test_cases.md",
+      "title": "Picker pick list in store-layout order with barcode verify"
+    },
+    {
+      "id": "TC-FUNC-022",
+      "type": "test-case",
+      "file": "03b_test_cases.md",
+      "title": "Nearest online rider gets 30 s offer; accept assigns"
+    },
+    {
+      "id": "TC-FUNC-023",
+      "type": "test-case",
+      "file": "03b_test_cases.md",
+      "title": "Pickup verification + delivery proof enforced"
+    },
+    {
+      "id": "TC-FUNC-024",
+      "type": "test-case",
+      "file": "03b_test_cases.md",
+      "title": "Online/offline toggle and accurate earnings"
+    },
+    {
+      "id": "TC-FUNC-025",
+      "type": "test-case",
+      "file": "03b_test_cases.md",
+      "title": "Catalog CRUD live within 60 s; bulk CSV upload"
+    },
+    {
+      "id": "TC-FUNC-026",
+      "type": "test-case",
+      "file": "03b_test_cases.md",
+      "title": "GRN, adjustment, cycle count produce audit trail + low-stock alert"
+    },
+    {
+      "id": "TC-FUNC-027",
+      "type": "test-case",
+      "file": "03b_test_cases.md",
+      "title": "Partner feed ingests via API and CSV with rejection report"
+    },
+    {
+      "id": "TC-FUNC-028",
+      "type": "test-case",
+      "file": "03b_test_cases.md",
+      "title": "Zone polygon publish updates serviceability \u2264 60 s"
+    },
+    {
+      "id": "TC-FUNC-029",
+      "type": "test-case",
+      "file": "03b_test_cases.md",
+      "title": "ETA breach lands in exception queue \u2264 30 s with one-click actions"
+    },
+    {
+      "id": "TC-FUNC-030",
+      "type": "test-case",
+      "file": "03b_test_cases.md",
+      "title": "Order search by ID or phone shows full actor timeline"
+    },
+    {
+      "id": "TC-FUNC-031",
+      "type": "test-case",
+      "file": "03b_test_cases.md",
+      "title": "KPI report reconciles with order ledger; daily digest"
+    },
+    {
+      "id": "TC-FUNC-032",
+      "type": "test-case",
+      "file": "03b_test_cases.md",
+      "title": "Lifecycle transition dispatches mapped notification \u2264 10 s"
+    },
+    {
+      "id": "TC-FUNC-033",
+      "type": "test-case",
+      "file": "03b_test_cases.md",
+      "title": "Each role sees only its modules"
+    },
+    {
+      "id": "TC-FUNC-034",
+      "type": "test-case",
+      "file": "03b_test_cases.md",
+      "title": "Substitution accepted \u2192 line substituted, bill adjusted"
+    },
+    {
+      "id": "E03-Th03-S01-T03",
+      "type": "task",
+      "file": "04b_task_breakdown.md",
+      "title": ""
+    },
+    {
+      "id": "E07-Th02-S01-T02",
+      "type": "task",
+      "file": "04b_task_breakdown.md",
+      "title": ""
+    },
+    {
+      "id": "E02-Th04-S01-T02",
+      "type": "task",
+      "file": "04b_task_breakdown.md",
+      "title": ""
+    },
+    {
+      "id": "E03-Th03-S01-T04",
+      "type": "task",
+      "file": "04b_task_breakdown.md",
+      "title": ""
+    },
+    {
+      "id": "E06-Th02-S01-T05",
+      "type": "task",
+      "file": "04b_task_breakdown.md",
+      "title": ""
+    },
+    {
+      "id": "E04-Th04-S01-T02",
+      "type": "task",
+      "file": "04b_task_breakdown.md",
+      "title": ""
+    },
+    {
+      "id": "E01-Th03-S02-T01",
+      "type": "task",
+      "file": "04b_task_breakdown.md",
+      "title": ""
+    },
+    {
+      "id": "E04-Th02-S01-T02",
+      "type": "task",
+      "file": "04b_task_breakdown.md",
+      "title": ""
+    },
+    {
+      "id": "E02-Th02-S01-T03",
+      "type": "task",
+      "file": "04b_task_breakdown.md",
+      "title": ""
+    },
+    {
+      "id": "E07-Th04-S01-T01",
+      "type": "task",
+      "file": "04b_task_breakdown.md",
+      "title": ""
+    },
+    {
+      "id": "E05-Th01-S01-T02",
+      "type": "task",
+      "file": "04b_task_breakdown.md",
+      "title": ""
+    },
+    {
+      "id": "E05-Th02-S01-T05",
+      "type": "task",
+      "file": "04b_task_breakdown.md",
+      "title": ""
+    },
+    {
+      "id": "E01-Th03-S01-T04",
+      "type": "task",
+      "file": "04b_task_breakdown.md",
+      "title": ""
+    },
+    {
+      "id": "E01-Th03-S02-T02",
+      "type": "task",
+      "file": "04b_task_breakdown.md",
+      "title": ""
+    },
+    {
+      "id": "E02-Th01-S01-T03",
+      "type": "task",
+      "file": "04b_task_breakdown.md",
+      "title": ""
+    },
+    {
+      "id": "E04-Th04-S01-T04",
+      "type": "task",
+      "file": "04b_task_breakdown.md",
+      "title": ""
+    },
+    {
+      "id": "E03-Th03-S01-T02",
+      "type": "task",
+      "file": "04b_task_breakdown.md",
+      "title": ""
+    },
+    {
+      "id": "E01-Th03-S03-T01",
+      "type": "task",
+      "file": "04b_task_breakdown.md",
+      "title": ""
+    },
+    {
+      "id": "E04-Th01-S01-T04",
+      "type": "task",
+      "file": "04b_task_breakdown.md",
+      "title": ""
+    },
+    {
+      "id": "E01-Th02-S01-T02",
+      "type": "task",
+      "file": "04b_task_breakdown.md",
+      "title": ""
+    },
+    {
+      "id": "E02-Th01-S01-T02",
+      "type": "task",
+      "file": "04b_task_breakdown.md",
+      "title": ""
+    },
+    {
+      "id": "E01-Th02-S01-T04",
+      "type": "task",
+      "file": "04b_task_breakdown.md",
+      "title": ""
+    },
+    {
+      "id": "E01-Th01-S01-T04",
+      "type": "task",
+      "file": "04b_task_breakdown.md",
+      "title": ""
+    },
+    {
+      "id": "E03-Th01-S02-T02",
+      "type": "task",
+      "file": "04b_task_breakdown.md",
+      "title": ""
+    },
+    {
+      "id": "E03-Th03-S01-T05",
+      "type": "task",
+      "file": "04b_task_breakdown.md",
+      "title": ""
+    },
+    {
+      "id": "E06-Th03-S01-T03",
+      "type": "task",
+      "file": "04b_task_breakdown.md",
+      "title": ""
+    },
+    {
+      "id": "E03-Th03-S01-T07",
+      "type": "task",
+      "file": "04b_task_breakdown.md",
+      "title": ""
+    },
+    {
+      "id": "E08-Th01-S01-T02",
+      "type": "task",
+      "file": "04b_task_breakdown.md",
+      "title": ""
+    },
+    {
+      "id": "E01-Th03-S02-T04",
+      "type": "task",
+      "file": "04b_task_breakdown.md",
+      "title": ""
+    },
+    {
+      "id": "E01-Th02-S01-T03",
+      "type": "task",
+      "file": "04b_task_breakdown.md",
+      "title": ""
+    },
+    {
+      "id": "E07-Th04-S01-T02",
+      "type": "task",
+      "file": "04b_task_breakdown.md",
+      "title": ""
+    },
+    {
+      "id": "E07-Th04-S01-T03",
+      "type": "task",
+      "file": "04b_task_breakdown.md",
+      "title": ""
+    },
+    {
+      "id": "E01-Th01-S02-T07",
+      "type": "task",
+      "file": "04b_task_breakdown.md",
+      "title": ""
+    },
+    {
+      "id": "E06-Th01-S01-T03",
+      "type": "task",
+      "file": "04b_task_breakdown.md",
+      "title": ""
+    },
+    {
+      "id": "E01-Th03-S01-T02",
+      "type": "task",
+      "file": "04b_task_breakdown.md",
+      "title": ""
+    },
+    {
+      "id": "E02-Th02-S01-T02",
+      "type": "task",
+      "file": "04b_task_breakdown.md",
+      "title": ""
+    },
+    {
+      "id": "E02-Th05-S01-T01",
+      "type": "task",
+      "file": "04b_task_breakdown.md",
+      "title": ""
+    },
+    {
+      "id": "E06-Th01-S01-T02",
+      "type": "task",
+      "file": "04b_task_breakdown.md",
+      "title": ""
+    },
+    {
+      "id": "E07-Th01-S01-T01",
+      "type": "task",
+      "file": "04b_task_breakdown.md",
+      "title": ""
+    },
+    {
+      "id": "E04-Th01-S01-T02",
+      "type": "task",
+      "file": "04b_task_breakdown.md",
+      "title": ""
+    },
+    {
+      "id": "E01-Th04-S01-T02",
+      "type": "task",
+      "file": "04b_task_breakdown.md",
+      "title": ""
+    },
+    {
+      "id": "E01-Th03-S01-T01",
+      "type": "task",
+      "file": "04b_task_breakdown.md",
+      "title": ""
+    },
+    {
+      "id": "E02-Th03-S01-T03",
+      "type": "task",
+      "file": "04b_task_breakdown.md",
+      "title": ""
+    },
+    {
+      "id": "E01-Th01-S02-T06",
+      "type": "task",
+      "file": "04b_task_breakdown.md",
+      "title": ""
+    },
+    {
+      "id": "E06-Th03-S01-T04",
+      "type": "task",
+      "file": "04b_task_breakdown.md",
+      "title": ""
+    },
+    {
+      "id": "E08-Th04-S01-T02",
+      "type": "task",
+      "file": "04b_task_breakdown.md",
+      "title": ""
+    },
+    {
+      "id": "E01-Th01-S02-T01",
+      "type": "task",
+      "file": "04b_task_breakdown.md",
+      "title": ""
+    },
+    {
+      "id": "E01-Th03-S01-T03",
+      "type": "task",
+      "file": "04b_task_breakdown.md",
+      "title": ""
+    },
+    {
+      "id": "E02-Th01-S01-T05",
+      "type": "task",
+      "file": "04b_task_breakdown.md",
+      "title": ""
+    },
+    {
+      "id": "E04-Th02-S01-T04",
+      "type": "task",
+      "file": "04b_task_breakdown.md",
+      "title": ""
+    },
+    {
+      "id": "E01-Th04-S01-T01",
+      "type": "task",
+      "file": "04b_task_breakdown.md",
+      "title": ""
+    },
+    {
+      "id": "E05-Th01-S01-T03",
+      "type": "task",
+      "file": "04b_task_breakdown.md",
+      "title": ""
+    },
+    {
+      "id": "E05-Th01-S01-T04",
+      "type": "task",
+      "file": "04b_task_breakdown.md",
+      "title": ""
+    },
+    {
+      "id": "E01-Th01-S01-T02",
+      "type": "task",
+      "file": "04b_task_breakdown.md",
+      "title": ""
+    },
+    {
+      "id": "E02-Th03-S01-T02",
+      "type": "task",
+      "file": "04b_task_breakdown.md",
+      "title": ""
+    },
+    {
+      "id": "E07-Th04-S01-T04",
+      "type": "task",
+      "file": "04b_task_breakdown.md",
+      "title": ""
+    },
+    {
+      "id": "E06-Th02-S01-T03",
+      "type": "task",
+      "file": "04b_task_breakdown.md",
+      "title": ""
+    },
+    {
+      "id": "E06-Th03-S01-T02",
+      "type": "task",
+      "file": "04b_task_breakdown.md",
+      "title": ""
+    },
+    {
+      "id": "E06-Th03-S01-T01",
+      "type": "task",
+      "file": "04b_task_breakdown.md",
+      "title": ""
+    },
+    {
+      "id": "E03-Th01-S01-T02",
+      "type": "task",
+      "file": "04b_task_breakdown.md",
+      "title": ""
+    },
+    {
+      "id": "E04-Th01-S01-T03",
+      "type": "task",
+      "file": "04b_task_breakdown.md",
+      "title": ""
+    },
+    {
+      "id": "E08-Th02-S01-T01",
+      "type": "task",
+      "file": "04b_task_breakdown.md",
+      "title": ""
+    },
+    {
+      "id": "E07-Th01-S01-T02",
+      "type": "task",
+      "file": "04b_task_breakdown.md",
+      "title": ""
+    },
+    {
+      "id": "E04-Th03-S01-T02",
+      "type": "task",
+      "file": "04b_task_breakdown.md",
+      "title": ""
+    },
+    {
+      "id": "E06-Th01-S01-T01",
+      "type": "task",
+      "file": "04b_task_breakdown.md",
+      "title": ""
+    },
+    {
+      "id": "E01-Th01-S02-T02",
+      "type": "task",
+      "file": "04b_task_breakdown.md",
+      "title": ""
+    },
+    {
+      "id": "E03-Th01-S01-T01",
+      "type": "task",
+      "file": "04b_task_breakdown.md",
+      "title": ""
+    },
+    {
+      "id": "E02-Th04-S01-T01",
+      "type": "task",
+      "file": "04b_task_breakdown.md",
+      "title": ""
+    },
+    {
+      "id": "E04-Th04-S01-T03",
+      "type": "task",
+      "file": "04b_task_breakdown.md",
+      "title": ""
+    },
+    {
+      "id": "E05-Th02-S01-T03",
+      "type": "task",
+      "file": "04b_task_breakdown.md",
+      "title": ""
+    },
+    {
+      "id": "E02-Th05-S01-T03",
+      "type": "task",
+      "file": "04b_task_breakdown.md",
+      "title": ""
+    },
+    {
+      "id": "E07-Th03-S01-T01",
+      "type": "task",
+      "file": "04b_task_breakdown.md",
+      "title": ""
+    },
+    {
+      "id": "E02-Th02-S01-T01",
+      "type": "task",
+      "file": "04b_task_breakdown.md",
+      "title": ""
+    },
+    {
+      "id": "E01-Th04-S01-T03",
+      "type": "task",
+      "file": "04b_task_breakdown.md",
+      "title": ""
+    },
+    {
+      "id": "E03-Th02-S01-T01",
+      "type": "task",
+      "file": "04b_task_breakdown.md",
+      "title": ""
+    },
+    {
+      "id": "E08-Th03-S01-T01",
+      "type": "task",
+      "file": "04b_task_breakdown.md",
+      "title": ""
+    },
+    {
+      "id": "E01-Th01-S01-T01",
+      "type": "task",
+      "file": "04b_task_breakdown.md",
+      "title": ""
+    },
+    {
+      "id": "E06-Th02-S01-T01",
+      "type": "task",
+      "file": "04b_task_breakdown.md",
+      "title": ""
+    },
+    {
+      "id": "E07-Th02-S01-T01",
+      "type": "task",
+      "file": "04b_task_breakdown.md",
+      "title": ""
+    },
+    {
+      "id": "E07-Th05-S01-T01",
+      "type": "task",
+      "file": "04b_task_breakdown.md",
+      "title": ""
+    },
+    {
+      "id": "E04-Th02-S01-T03",
+      "type": "task",
+      "file": "04b_task_breakdown.md",
+      "title": ""
+    },
+    {
+      "id": "E06-Th02-S01-T04",
+      "type": "task",
+      "file": "04b_task_breakdown.md",
+      "title": ""
+    },
+    {
+      "id": "E02-Th05-S01-T02",
+      "type": "task",
+      "file": "04b_task_breakdown.md",
+      "title": ""
+    },
+    {
+      "id": "E06-Th02-S01-T02",
+      "type": "task",
+      "file": "04b_task_breakdown.md",
+      "title": ""
+    },
+    {
+      "id": "E01-Th04-S01-T04",
+      "type": "task",
+      "file": "04b_task_breakdown.md",
+      "title": ""
+    },
+    {
+      "id": "E05-Th02-S01-T01",
+      "type": "task",
+      "file": "04b_task_breakdown.md",
+      "title": ""
+    },
+    {
+      "id": "E02-Th03-S01-T01",
+      "type": "task",
+      "file": "04b_task_breakdown.md",
+      "title": ""
+    },
+    {
+      "id": "E08-Th02-S01-T02",
+      "type": "task",
+      "file": "04b_task_breakdown.md",
+      "title": ""
+    },
+    {
+      "id": "E03-Th01-S02-T01",
+      "type": "task",
+      "file": "04b_task_breakdown.md",
+      "title": ""
+    },
+    {
+      "id": "E04-Th03-S01-T03",
+      "type": "task",
+      "file": "04b_task_breakdown.md",
+      "title": ""
+    },
+    {
+      "id": "E03-Th03-S01-T06",
+      "type": "task",
+      "file": "04b_task_breakdown.md",
+      "title": ""
+    },
+    {
+      "id": "E04-Th01-S01-T01",
+      "type": "task",
+      "file": "04b_task_breakdown.md",
+      "title": ""
+    },
+    {
+      "id": "E04-Th04-S01-T01",
+      "type": "task",
+      "file": "04b_task_breakdown.md",
+      "title": ""
+    },
+    {
+      "id": "E04-Th05-S01-T03",
+      "type": "task",
+      "file": "04b_task_breakdown.md",
+      "title": ""
+    },
+    {
+      "id": "E04-Th05-S01-T02",
+      "type": "task",
+      "file": "04b_task_breakdown.md",
+      "title": ""
+    },
+    {
+      "id": "E01-Th04-S01-T05",
+      "type": "task",
+      "file": "04b_task_breakdown.md",
+      "title": ""
+    },
+    {
+      "id": "E01-Th03-S02-T03",
+      "type": "task",
+      "file": "04b_task_breakdown.md",
+      "title": ""
+    },
+    {
+      "id": "E08-Th01-S01-T01",
+      "type": "task",
+      "file": "04b_task_breakdown.md",
+      "title": ""
+    },
+    {
+      "id": "E03-Th03-S01-T01",
+      "type": "task",
+      "file": "04b_task_breakdown.md",
+      "title": ""
+    },
+    {
+      "id": "E01-Th01-S02-T04",
+      "type": "task",
+      "file": "04b_task_breakdown.md",
+      "title": ""
+    },
+    {
+      "id": "E01-Th03-S03-T02",
+      "type": "task",
+      "file": "04b_task_breakdown.md",
+      "title": ""
+    },
+    {
+      "id": "E06-Th01-S01-T05",
+      "type": "task",
+      "file": "04b_task_breakdown.md",
+      "title": ""
+    },
+    {
+      "id": "E01-Th01-S01-T05",
+      "type": "task",
+      "file": "04b_task_breakdown.md",
+      "title": ""
+    },
+    {
+      "id": "E06-Th01-S01-T04",
+      "type": "task",
+      "file": "04b_task_breakdown.md",
+      "title": ""
+    },
+    {
+      "id": "E03-Th04-S01-T03",
+      "type": "task",
+      "file": "04b_task_breakdown.md",
+      "title": ""
+    },
+    {
+      "id": "E03-Th01-S01-T03",
+      "type": "task",
+      "file": "04b_task_breakdown.md",
+      "title": ""
+    },
+    {
+      "id": "E02-Th01-S01-T01",
+      "type": "task",
+      "file": "04b_task_breakdown.md",
+      "title": ""
+    },
+    {
+      "id": "E02-Th01-S01-T04",
+      "type": "task",
+      "file": "04b_task_breakdown.md",
+      "title": ""
+    },
+    {
+      "id": "E01-Th01-S02-T03",
+      "type": "task",
+      "file": "04b_task_breakdown.md",
+      "title": ""
+    },
+    {
+      "id": "E07-Th05-S01-T02",
+      "type": "task",
+      "file": "04b_task_breakdown.md",
+      "title": ""
+    },
+    {
+      "id": "E05-Th01-S01-T01",
+      "type": "task",
+      "file": "04b_task_breakdown.md",
+      "title": ""
+    },
+    {
+      "id": "E03-Th01-S01-T04",
+      "type": "task",
+      "file": "04b_task_breakdown.md",
+      "title": ""
+    },
+    {
+      "id": "E04-Th02-S01-T01",
+      "type": "task",
+      "file": "04b_task_breakdown.md",
+      "title": ""
+    },
+    {
+      "id": "E03-Th01-S02-T03",
+      "type": "task",
+      "file": "04b_task_breakdown.md",
+      "title": ""
+    },
+    {
+      "id": "E05-Th02-S01-T02",
+      "type": "task",
+      "file": "04b_task_breakdown.md",
+      "title": ""
+    },
+    {
+      "id": "E04-Th03-S01-T01",
+      "type": "task",
+      "file": "04b_task_breakdown.md",
+      "title": ""
+    },
+    {
+      "id": "E08-Th03-S01-T02",
+      "type": "task",
+      "file": "04b_task_breakdown.md",
+      "title": ""
+    },
+    {
+      "id": "E02-Th02-S01-T04",
+      "type": "task",
+      "file": "04b_task_breakdown.md",
+      "title": ""
+    },
+    {
+      "id": "E05-Th02-S01-T04",
+      "type": "task",
+      "file": "04b_task_breakdown.md",
+      "title": ""
+    },
+    {
+      "id": "E04-Th05-S01-T01",
+      "type": "task",
+      "file": "04b_task_breakdown.md",
+      "title": ""
+    },
+    {
+      "id": "E08-Th04-S01-T01",
+      "type": "task",
+      "file": "04b_task_breakdown.md",
+      "title": ""
+    },
+    {
+      "id": "E01-Th01-S01-T03",
+      "type": "task",
+      "file": "04b_task_breakdown.md",
+      "title": ""
+    },
+    {
+      "id": "E01-Th02-S01-T01",
+      "type": "task",
+      "file": "04b_task_breakdown.md",
+      "title": ""
+    },
+    {
+      "id": "E05-Th01-S01-T05",
+      "type": "task",
+      "file": "04b_task_breakdown.md",
+      "title": ""
+    },
+    {
+      "id": "E03-Th04-S01-T01",
+      "type": "task",
+      "file": "04b_task_breakdown.md",
+      "title": ""
+    },
+    {
+      "id": "E03-Th01-S01-T05",
+      "type": "task",
+      "file": "04b_task_breakdown.md",
+      "title": ""
+    },
+    {
+      "id": "E03-Th04-S01-T02",
+      "type": "task",
+      "file": "04b_task_breakdown.md",
+      "title": ""
+    },
+    {
+      "id": "E07-Th03-S01-T02",
+      "type": "task",
+      "file": "04b_task_breakdown.md",
+      "title": ""
+    },
+    {
+      "id": "E02-Th04-S01-T03",
+      "type": "task",
+      "file": "04b_task_breakdown.md",
+      "title": ""
+    },
+    {
+      "id": "E03-Th02-S01-T02",
+      "type": "task",
+      "file": "04b_task_breakdown.md",
+      "title": ""
+    },
+    {
+      "id": "E01-Th01-S02-T05",
+      "type": "task",
+      "file": "04b_task_breakdown.md",
+      "title": ""
+    },
+    {
+      "id": "E01-Th03-S02",
+      "type": "story",
+      "file": "04b_task_breakdown.md",
+      "title": ""
+    },
+    {
+      "id": "E07-Th05-S01",
+      "type": "story",
+      "file": "04b_task_breakdown.md",
+      "title": ""
+    },
+    {
+      "id": "E08-Th02-S01",
+      "type": "story",
+      "file": "04b_task_breakdown.md",
+      "title": ""
+    },
+    {
+      "id": "E08-Th03-S01",
+      "type": "story",
+      "file": "04b_task_breakdown.md",
+      "title": ""
+    },
+    {
+      "id": "E08-Th04-S01",
+      "type": "story",
+      "file": "04b_task_breakdown.md",
+      "title": ""
+    },
+    {
+      "id": "E04-Th03-S01",
+      "type": "story",
+      "file": "04b_task_breakdown.md",
+      "title": ""
+    },
+    {
+      "id": "E02-Th04-S01",
+      "type": "story",
+      "file": "04b_task_breakdown.md",
+      "title": ""
+    },
+    {
+      "id": "E04-Th04-S01",
+      "type": "story",
+      "file": "04b_task_breakdown.md",
+      "title": ""
+    },
+    {
+      "id": "E06-Th02-S01",
+      "type": "story",
+      "file": "04b_task_breakdown.md",
+      "title": ""
+    },
+    {
+      "id": "E01-Th04-S01",
+      "type": "story",
+      "file": "04b_task_breakdown.md",
+      "title": ""
+    },
+    {
+      "id": "E05-Th01-S01",
+      "type": "story",
+      "file": "04b_task_breakdown.md",
+      "title": ""
+    },
+    {
+      "id": "E03-Th01-S02",
+      "type": "story",
+      "file": "04b_task_breakdown.md",
+      "title": ""
+    },
+    {
+      "id": "E05-Th02-S01",
+      "type": "story",
+      "file": "04b_task_breakdown.md",
+      "title": ""
+    },
+    {
+      "id": "E02-Th05-S01",
+      "type": "story",
+      "file": "04b_task_breakdown.md",
+      "title": ""
+    },
+    {
+      "id": "E02-Th03-S01",
+      "type": "story",
+      "file": "04b_task_breakdown.md",
+      "title": ""
+    },
+    {
+      "id": "E07-Th02-S01",
+      "type": "story",
+      "file": "04b_task_breakdown.md",
+      "title": ""
+    },
+    {
+      "id": "E07-Th01-S01",
+      "type": "story",
+      "file": "04b_task_breakdown.md",
+      "title": ""
+    },
+    {
+      "id": "E03-Th01-S01",
+      "type": "story",
+      "file": "04b_task_breakdown.md",
+      "title": ""
+    },
+    {
+      "id": "E04-Th05-S01",
+      "type": "story",
+      "file": "04b_task_breakdown.md",
+      "title": ""
+    },
+    {
+      "id": "E04-Th02-S01",
+      "type": "story",
+      "file": "04b_task_breakdown.md",
+      "title": ""
+    },
+    {
+      "id": "E03-Th03-S01",
+      "type": "story",
+      "file": "04b_task_breakdown.md",
+      "title": ""
+    },
+    {
+      "id": "E03-Th04-S01",
+      "type": "story",
+      "file": "04b_task_breakdown.md",
+      "title": ""
+    },
+    {
+      "id": "E02-Th02-S01",
+      "type": "story",
+      "file": "04b_task_breakdown.md",
+      "title": ""
+    },
+    {
+      "id": "E07-Th03-S01",
+      "type": "story",
+      "file": "04b_task_breakdown.md",
+      "title": ""
+    },
+    {
+      "id": "E07-Th04-S01",
+      "type": "story",
+      "file": "04b_task_breakdown.md",
+      "title": ""
+    },
+    {
+      "id": "E01-Th02-S01",
+      "type": "story",
+      "file": "04b_task_breakdown.md",
+      "title": ""
+    },
+    {
+      "id": "E01-Th03-S03",
+      "type": "story",
+      "file": "04b_task_breakdown.md",
+      "title": ""
+    },
+    {
+      "id": "E06-Th03-S01",
+      "type": "story",
+      "file": "04b_task_breakdown.md",
+      "title": ""
+    },
+    {
+      "id": "E01-Th01-S02",
+      "type": "story",
+      "file": "04b_task_breakdown.md",
+      "title": ""
+    },
+    {
+      "id": "E02-Th01-S01",
+      "type": "story",
+      "file": "04b_task_breakdown.md",
+      "title": ""
+    },
+    {
+      "id": "E01-Th01-S01",
+      "type": "story",
+      "file": "04b_task_breakdown.md",
+      "title": ""
+    },
+    {
+      "id": "E03-Th02-S01",
+      "type": "story",
+      "file": "04b_task_breakdown.md",
+      "title": ""
+    },
+    {
+      "id": "E01-Th03-S01",
+      "type": "story",
+      "file": "04b_task_breakdown.md",
+      "title": ""
+    },
+    {
+      "id": "E04-Th01-S01",
+      "type": "story",
+      "file": "04b_task_breakdown.md",
+      "title": ""
+    },
+    {
+      "id": "E08-Th01-S01",
+      "type": "story",
+      "file": "04b_task_breakdown.md",
+      "title": ""
+    },
+    {
+      "id": "E06-Th01-S01",
+      "type": "story",
+      "file": "04b_task_breakdown.md",
+      "title": ""
+    }
+  ],
+  "edges": [
+    {
+      "from": "TC-FUNC-001",
+      "to": "FR-1",
+      "type": "tests"
+    },
+    {
+      "from": "TC-FUNC-002",
+      "to": "FR-1",
+      "type": "tests"
+    },
+    {
+      "from": "TC-FUNC-003",
+      "to": "FR-2",
+      "type": "tests"
+    },
+    {
+      "from": "TC-FUNC-004",
+      "to": "FR-2",
+      "type": "tests"
+    },
+    {
+      "from": "TC-FUNC-005",
+      "to": "FR-3",
+      "type": "tests"
+    },
+    {
+      "from": "TC-FUNC-006",
+      "to": "FR-4",
+      "type": "tests"
+    },
+    {
+      "from": "TC-FUNC-007",
+      "to": "FR-5",
+      "type": "tests"
+    },
+    {
+      "from": "TC-FUNC-008",
+      "to": "FR-6",
+      "type": "tests"
+    },
+    {
+      "from": "TC-FUNC-009",
+      "to": "FR-7",
+      "type": "tests"
+    },
+    {
+      "from": "TC-FUNC-011",
+      "to": "FR-9",
+      "type": "tests"
+    },
+    {
+      "from": "TC-FUNC-014",
+      "to": "FR-10",
+      "type": "tests"
+    },
+    {
+      "from": "TC-FUNC-019",
+      "to": "FR-15",
+      "type": "tests"
+    },
+    {
+      "from": "TC-FUNC-020",
+      "to": "FR-16",
+      "type": "tests"
+    },
+    {
+      "from": "TC-FUNC-021",
+      "to": "FR-17",
+      "type": "tests"
+    },
+    {
+      "from": "TC-FUNC-022",
+      "to": "FR-18",
+      "type": "tests"
+    },
+    {
+      "from": "TC-FUNC-024",
+      "to": "FR-20",
+      "type": "tests"
+    },
+    {
+      "from": "TC-FUNC-025",
+      "to": "FR-21",
+      "type": "tests"
+    },
+    {
+      "from": "TC-FUNC-026",
+      "to": "FR-22",
+      "type": "tests"
+    },
+    {
+      "from": "TC-FUNC-027",
+      "to": "FR-23",
+      "type": "tests"
+    },
+    {
+      "from": "TC-FUNC-028",
+      "to": "FR-24",
+      "type": "tests"
+    },
+    {
+      "from": "TC-FUNC-029",
+      "to": "FR-25",
+      "type": "tests"
+    },
+    {
+      "from": "TC-FUNC-030",
+      "to": "FR-26",
+      "type": "tests"
+    },
+    {
+      "from": "TC-FUNC-031",
+      "to": "FR-27",
+      "type": "tests"
+    },
+    {
+      "from": "TC-FUNC-032",
+      "to": "FR-28",
+      "type": "tests"
+    },
+    {
+      "from": "TC-FUNC-033",
+      "to": "FR-29",
+      "type": "tests"
+    },
+    {
+      "from": "TC-FUNC-034",
+      "to": "FR-30",
+      "type": "tests"
+    },
+    {
+      "from": "E03-Th03-S01-T03",
+      "to": "E03-Th03-S01",
+      "type": "belongs-to"
+    },
+    {
+      "from": "E07-Th02-S01-T02",
+      "to": "E07-Th02-S01",
+      "type": "belongs-to"
+    },
+    {
+      "from": "E02-Th04-S01-T02",
+      "to": "E02-Th04-S01",
+      "type": "belongs-to"
+    },
+    {
+      "from": "E03-Th03-S01-T04",
+      "to": "E03-Th03-S01",
+      "type": "belongs-to"
+    },
+    {
+      "from": "E06-Th02-S01-T05",
+      "to": "E06-Th02-S01",
+      "type": "belongs-to"
+    },
+    {
+      "from": "E04-Th04-S01-T02",
+      "to": "E04-Th04-S01",
+      "type": "belongs-to"
+    },
+    {
+      "from": "E01-Th03-S02-T01",
+      "to": "E01-Th03-S02",
+      "type": "belongs-to"
+    },
+    {
+      "from": "E04-Th02-S01-T02",
+      "to": "E04-Th02-S01",
+      "type": "belongs-to"
+    },
+    {
+      "from": "E02-Th02-S01-T03",
+      "to": "E02-Th02-S01",
+      "type": "belongs-to"
+    },
+    {
+      "from": "E07-Th04-S01-T01",
+      "to": "E07-Th04-S01",
+      "type": "belongs-to"
+    },
+    {
+      "from": "E05-Th01-S01-T02",
+      "to": "E05-Th01-S01",
+      "type": "belongs-to"
+    },
+    {
+      "from": "E05-Th02-S01-T05",
+      "to": "E05-Th02-S01",
+      "type": "belongs-to"
+    },
+    {
+      "from": "E01-Th03-S01-T04",
+      "to": "E01-Th03-S01",
+      "type": "belongs-to"
+    },
+    {
+      "from": "E01-Th03-S02-T02",
+      "to": "E01-Th03-S02",
+      "type": "belongs-to"
+    },
+    {
+      "from": "E02-Th01-S01-T03",
+      "to": "E02-Th01-S01",
+      "type": "belongs-to"
+    },
+    {
+      "from": "E04-Th04-S01-T04",
+      "to": "E04-Th04-S01",
+      "type": "belongs-to"
+    },
+    {
+      "from": "E03-Th03-S01-T02",
+      "to": "E03-Th03-S01",
+      "type": "belongs-to"
+    },
+    {
+      "from": "E01-Th03-S03-T01",
+      "to": "E01-Th03-S03",
+      "type": "belongs-to"
+    },
+    {
+      "from": "E04-Th01-S01-T04",
+      "to": "E04-Th01-S01",
+      "type": "belongs-to"
+    },
+    {
+      "from": "E01-Th02-S01-T02",
+      "to": "E01-Th02-S01",
+      "type": "belongs-to"
+    },
+    {
+      "from": "E02-Th01-S01-T02",
+      "to": "E02-Th01-S01",
+      "type": "belongs-to"
+    },
+    {
+      "from": "E01-Th02-S01-T04",
+      "to": "E01-Th02-S01",
+      "type": "belongs-to"
+    },
+    {
+      "from": "E01-Th01-S01-T04",
+      "to": "E01-Th01-S01",
+      "type": "belongs-to"
+    },
+    {
+      "from": "E03-Th01-S02-T02",
+      "to": "E03-Th01-S02",
+      "type": "belongs-to"
+    },
+    {
+      "from": "E03-Th03-S01-T05",
+      "to": "E03-Th03-S01",
+      "type": "belongs-to"
+    },
+    {
+      "from": "E06-Th03-S01-T03",
+      "to": "E06-Th03-S01",
+      "type": "belongs-to"
+    },
+    {
+      "from": "E03-Th03-S01-T07",
+      "to": "E03-Th03-S01",
+      "type": "belongs-to"
+    },
+    {
+      "from": "E08-Th01-S01-T02",
+      "to": "E08-Th01-S01",
+      "type": "belongs-to"
+    },
+    {
+      "from": "E01-Th03-S02-T04",
+      "to": "E01-Th03-S02",
+      "type": "belongs-to"
+    },
+    {
+      "from": "E01-Th02-S01-T03",
+      "to": "E01-Th02-S01",
+      "type": "belongs-to"
+    },
+    {
+      "from": "E07-Th04-S01-T02",
+      "to": "E07-Th04-S01",
+      "type": "belongs-to"
+    },
+    {
+      "from": "E07-Th04-S01-T03",
+      "to": "E07-Th04-S01",
+      "type": "belongs-to"
+    },
+    {
+      "from": "E01-Th01-S02-T07",
+      "to": "E01-Th01-S02",
+      "type": "belongs-to"
+    },
+    {
+      "from": "E06-Th01-S01-T03",
+      "to": "E06-Th01-S01",
+      "type": "belongs-to"
+    },
+    {
+      "from": "E01-Th03-S01-T02",
+      "to": "E01-Th03-S01",
+      "type": "belongs-to"
+    },
+    {
+      "from": "E02-Th02-S01-T02",
+      "to": "E02-Th02-S01",
+      "type": "belongs-to"
+    },
+    {
+      "from": "E02-Th05-S01-T01",
+      "to": "E02-Th05-S01",
+      "type": "belongs-to"
+    },
+    {
+      "from": "E06-Th01-S01-T02",
+      "to": "E06-Th01-S01",
+      "type": "belongs-to"
+    },
+    {
+      "from": "E07-Th01-S01-T01",
+      "to": "E07-Th01-S01",
+      "type": "belongs-to"
+    },
+    {
+      "from": "E04-Th01-S01-T02",
+      "to": "E04-Th01-S01",
+      "type": "belongs-to"
+    },
+    {
+      "from": "E01-Th04-S01-T02",
+      "to": "E01-Th04-S01",
+      "type": "belongs-to"
+    },
+    {
+      "from": "E01-Th03-S01-T01",
+      "to": "E01-Th03-S01",
+      "type": "belongs-to"
+    },
+    {
+      "from": "E02-Th03-S01-T03",
+      "to": "E02-Th03-S01",
+      "type": "belongs-to"
+    },
+    {
+      "from": "E01-Th01-S02-T06",
+      "to": "E01-Th01-S02",
+      "type": "belongs-to"
+    },
+    {
+      "from": "E06-Th03-S01-T04",
+      "to": "E06-Th03-S01",
+      "type": "belongs-to"
+    },
+    {
+      "from": "E08-Th04-S01-T02",
+      "to": "E08-Th04-S01",
+      "type": "belongs-to"
+    },
+    {
+      "from": "E01-Th01-S02-T01",
+      "to": "E01-Th01-S02",
+      "type": "belongs-to"
+    },
+    {
+      "from": "E01-Th03-S01-T03",
+      "to": "E01-Th03-S01",
+      "type": "belongs-to"
+    },
+    {
+      "from": "E02-Th01-S01-T05",
+      "to": "E02-Th01-S01",
+      "type": "belongs-to"
+    },
+    {
+      "from": "E04-Th02-S01-T04",
+      "to": "E04-Th02-S01",
+      "type": "belongs-to"
+    },
+    {
+      "from": "E01-Th04-S01-T01",
+      "to": "E01-Th04-S01",
+      "type": "belongs-to"
+    },
+    {
+      "from": "E05-Th01-S01-T03",
+      "to": "E05-Th01-S01",
+      "type": "belongs-to"
+    },
+    {
+      "from": "E05-Th01-S01-T04",
+      "to": "E05-Th01-S01",
+      "type": "belongs-to"
+    },
+    {
+      "from": "E01-Th01-S01-T02",
+      "to": "E01-Th01-S01",
+      "type": "belongs-to"
+    },
+    {
+      "from": "E02-Th03-S01-T02",
+      "to": "E02-Th03-S01",
+      "type": "belongs-to"
+    },
+    {
+      "from": "E07-Th04-S01-T04",
+      "to": "E07-Th04-S01",
+      "type": "belongs-to"
+    },
+    {
+      "from": "E06-Th02-S01-T03",
+      "to": "E06-Th02-S01",
+      "type": "belongs-to"
+    },
+    {
+      "from": "E06-Th03-S01-T02",
+      "to": "E06-Th03-S01",
+      "type": "belongs-to"
+    },
+    {
+      "from": "E06-Th03-S01-T01",
+      "to": "E06-Th03-S01",
+      "type": "belongs-to"
+    },
+    {
+      "from": "E03-Th01-S01-T02",
+      "to": "E03-Th01-S01",
+      "type": "belongs-to"
+    },
+    {
+      "from": "E04-Th01-S01-T03",
+      "to": "E04-Th01-S01",
+      "type": "belongs-to"
+    },
+    {
+      "from": "E08-Th02-S01-T01",
+      "to": "E08-Th02-S01",
+      "type": "belongs-to"
+    },
+    {
+      "from": "E07-Th01-S01-T02",
+      "to": "E07-Th01-S01",
+      "type": "belongs-to"
+    },
+    {
+      "from": "E04-Th03-S01-T02",
+      "to": "E04-Th03-S01",
+      "type": "belongs-to"
+    },
+    {
+      "from": "E06-Th01-S01-T01",
+      "to": "E06-Th01-S01",
+      "type": "belongs-to"
+    },
+    {
+      "from": "E01-Th01-S02-T02",
+      "to": "E01-Th01-S02",
+      "type": "belongs-to"
+    },
+    {
+      "from": "E03-Th01-S01-T01",
+      "to": "E03-Th01-S01",
+      "type": "belongs-to"
+    },
+    {
+      "from": "E02-Th04-S01-T01",
+      "to": "E02-Th04-S01",
+      "type": "belongs-to"
+    },
+    {
+      "from": "E04-Th04-S01-T03",
+      "to": "E04-Th04-S01",
+      "type": "belongs-to"
+    },
+    {
+      "from": "E05-Th02-S01-T03",
+      "to": "E05-Th02-S01",
+      "type": "belongs-to"
+    },
+    {
+      "from": "E02-Th05-S01-T03",
+      "to": "E02-Th05-S01",
+      "type": "belongs-to"
+    },
+    {
+      "from": "E07-Th03-S01-T01",
+      "to": "E07-Th03-S01",
+      "type": "belongs-to"
+    },
+    {
+      "from": "E02-Th02-S01-T01",
+      "to": "E02-Th02-S01",
+      "type": "belongs-to"
+    },
+    {
+      "from": "E01-Th04-S01-T03",
+      "to": "E01-Th04-S01",
+      "type": "belongs-to"
+    },
+    {
+      "from": "E03-Th02-S01-T01",
+      "to": "E03-Th02-S01",
+      "type": "belongs-to"
+    },
+    {
+      "from": "E08-Th03-S01-T01",
+      "to": "E08-Th03-S01",
+      "type": "belongs-to"
+    },
+    {
+      "from": "E01-Th01-S01-T01",
+      "to": "E01-Th01-S01",
+      "type": "belongs-to"
+    },
+    {
+      "from": "E06-Th02-S01-T01",
+      "to": "E06-Th02-S01",
+      "type": "belongs-to"
+    },
+    {
+      "from": "E07-Th02-S01-T01",
+      "to": "E07-Th02-S01",
+      "type": "belongs-to"
+    },
+    {
+      "from": "E07-Th05-S01-T01",
+      "to": "E07-Th05-S01",
+      "type": "belongs-to"
+    },
+    {
+      "from": "E04-Th02-S01-T03",
+      "to": "E04-Th02-S01",
+      "type": "belongs-to"
+    },
+    {
+      "from": "E06-Th02-S01-T04",
+      "to": "E06-Th02-S01",
+      "type": "belongs-to"
+    },
+    {
+      "from": "E02-Th05-S01-T02",
+      "to": "E02-Th05-S01",
+      "type": "belongs-to"
+    },
+    {
+      "from": "E06-Th02-S01-T02",
+      "to": "E06-Th02-S01",
+      "type": "belongs-to"
+    },
+    {
+      "from": "E01-Th04-S01-T04",
+      "to": "E01-Th04-S01",
+      "type": "belongs-to"
+    },
+    {
+      "from": "E05-Th02-S01-T01",
+      "to": "E05-Th02-S01",
+      "type": "belongs-to"
+    },
+    {
+      "from": "E02-Th03-S01-T01",
+      "to": "E02-Th03-S01",
+      "type": "belongs-to"
+    },
+    {
+      "from": "E08-Th02-S01-T02",
+      "to": "E08-Th02-S01",
+      "type": "belongs-to"
+    },
+    {
+      "from": "E03-Th01-S02-T01",
+      "to": "E03-Th01-S02",
+      "type": "belongs-to"
+    },
+    {
+      "from": "E04-Th03-S01-T03",
+      "to": "E04-Th03-S01",
+      "type": "belongs-to"
+    },
+    {
+      "from": "E03-Th03-S01-T06",
+      "to": "E03-Th03-S01",
+      "type": "belongs-to"
+    },
+    {
+      "from": "E04-Th01-S01-T01",
+      "to": "E04-Th01-S01",
+      "type": "belongs-to"
+    },
+    {
+      "from": "E04-Th04-S01-T01",
+      "to": "E04-Th04-S01",
+      "type": "belongs-to"
+    },
+    {
+      "from": "E04-Th05-S01-T03",
+      "to": "E04-Th05-S01",
+      "type": "belongs-to"
+    },
+    {
+      "from": "E04-Th05-S01-T02",
+      "to": "E04-Th05-S01",
+      "type": "belongs-to"
+    },
+    {
+      "from": "E01-Th04-S01-T05",
+      "to": "E01-Th04-S01",
+      "type": "belongs-to"
+    },
+    {
+      "from": "E01-Th03-S02-T03",
+      "to": "E01-Th03-S02",
+      "type": "belongs-to"
+    },
+    {
+      "from": "E08-Th01-S01-T01",
+      "to": "E08-Th01-S01",
+      "type": "belongs-to"
+    },
+    {
+      "from": "E03-Th03-S01-T01",
+      "to": "E03-Th03-S01",
+      "type": "belongs-to"
+    },
+    {
+      "from": "E01-Th01-S02-T04",
+      "to": "E01-Th01-S02",
+      "type": "belongs-to"
+    },
+    {
+      "from": "E01-Th03-S03-T02",
+      "to": "E01-Th03-S03",
+      "type": "belongs-to"
+    },
+    {
+      "from": "E06-Th01-S01-T05",
+      "to": "E06-Th01-S01",
+      "type": "belongs-to"
+    },
+    {
+      "from": "E01-Th01-S01-T05",
+      "to": "E01-Th01-S01",
+      "type": "belongs-to"
+    },
+    {
+      "from": "E06-Th01-S01-T04",
+      "to": "E06-Th01-S01",
+      "type": "belongs-to"
+    },
+    {
+      "from": "E03-Th04-S01-T03",
+      "to": "E03-Th04-S01",
+      "type": "belongs-to"
+    },
+    {
+      "from": "E03-Th01-S01-T03",
+      "to": "E03-Th01-S01",
+      "type": "belongs-to"
+    },
+    {
+      "from": "E02-Th01-S01-T01",
+      "to": "E02-Th01-S01",
+      "type": "belongs-to"
+    },
+    {
+      "from": "E02-Th01-S01-T04",
+      "to": "E02-Th01-S01",
+      "type": "belongs-to"
+    },
+    {
+      "from": "E01-Th01-S02-T03",
+      "to": "E01-Th01-S02",
+      "type": "belongs-to"
+    },
+    {
+      "from": "E07-Th05-S01-T02",
+      "to": "E07-Th05-S01",
+      "type": "belongs-to"
+    },
+    {
+      "from": "E05-Th01-S01-T01",
+      "to": "E05-Th01-S01",
+      "type": "belongs-to"
+    },
+    {
+      "from": "E03-Th01-S01-T04",
+      "to": "E03-Th01-S01",
+      "type": "belongs-to"
+    },
+    {
+      "from": "E04-Th02-S01-T01",
+      "to": "E04-Th02-S01",
+      "type": "belongs-to"
+    },
+    {
+      "from": "E03-Th01-S02-T03",
+      "to": "E03-Th01-S02",
+      "type": "belongs-to"
+    },
+    {
+      "from": "E05-Th02-S01-T02",
+      "to": "E05-Th02-S01",
+      "type": "belongs-to"
+    },
+    {
+      "from": "E04-Th03-S01-T01",
+      "to": "E04-Th03-S01",
+      "type": "belongs-to"
+    },
+    {
+      "from": "E08-Th03-S01-T02",
+      "to": "E08-Th03-S01",
+      "type": "belongs-to"
+    },
+    {
+      "from": "E02-Th02-S01-T04",
+      "to": "E02-Th02-S01",
+      "type": "belongs-to"
+    },
+    {
+      "from": "E05-Th02-S01-T04",
+      "to": "E05-Th02-S01",
+      "type": "belongs-to"
+    },
+    {
+      "from": "E04-Th05-S01-T01",
+      "to": "E04-Th05-S01",
+      "type": "belongs-to"
+    },
+    {
+      "from": "E08-Th04-S01-T01",
+      "to": "E08-Th04-S01",
+      "type": "belongs-to"
+    },
+    {
+      "from": "E01-Th01-S01-T03",
+      "to": "E01-Th01-S01",
+      "type": "belongs-to"
+    },
+    {
+      "from": "E01-Th02-S01-T01",
+      "to": "E01-Th02-S01",
+      "type": "belongs-to"
+    },
+    {
+      "from": "E05-Th01-S01-T05",
+      "to": "E05-Th01-S01",
+      "type": "belongs-to"
+    },
+    {
+      "from": "E03-Th04-S01-T01",
+      "to": "E03-Th04-S01",
+      "type": "belongs-to"
+    },
+    {
+      "from": "E03-Th01-S01-T05",
+      "to": "E03-Th01-S01",
+      "type": "belongs-to"
+    },
+    {
+      "from": "E03-Th04-S01-T02",
+      "to": "E03-Th04-S01",
+      "type": "belongs-to"
+    },
+    {
+      "from": "E07-Th03-S01-T02",
+      "to": "E07-Th03-S01",
+      "type": "belongs-to"
+    },
+    {
+      "from": "E02-Th04-S01-T03",
+      "to": "E02-Th04-S01",
+      "type": "belongs-to"
+    },
+    {
+      "from": "E03-Th02-S01-T02",
+      "to": "E03-Th02-S01",
+      "type": "belongs-to"
+    },
+    {
+      "from": "E01-Th01-S02-T05",
+      "to": "E01-Th01-S02",
+      "type": "belongs-to"
+    },
+    {
+      "from": "E01-Th03-S02",
+      "to": "E01-Th03",
+      "type": "belongs-to"
+    },
+    {
+      "from": "E07-Th05-S01",
+      "to": "E07-Th05",
+      "type": "belongs-to"
+    },
+    {
+      "from": "E08-Th02-S01",
+      "to": "E08-Th02",
+      "type": "belongs-to"
+    },
+    {
+      "from": "E08-Th03-S01",
+      "to": "E08-Th03",
+      "type": "belongs-to"
+    },
+    {
+      "from": "E08-Th04-S01",
+      "to": "E08-Th04",
+      "type": "belongs-to"
+    },
+    {
+      "from": "E04-Th03-S01",
+      "to": "E04-Th03",
+      "type": "belongs-to"
+    },
+    {
+      "from": "E02-Th04-S01",
+      "to": "E02-Th04",
+      "type": "belongs-to"
+    },
+    {
+      "from": "E04-Th04-S01",
+      "to": "E04-Th04",
+      "type": "belongs-to"
+    },
+    {
+      "from": "E06-Th02-S01",
+      "to": "E06-Th02",
+      "type": "belongs-to"
+    },
+    {
+      "from": "E01-Th04-S01",
+      "to": "E01-Th04",
+      "type": "belongs-to"
+    },
+    {
+      "from": "E05-Th01-S01",
+      "to": "E05-Th01",
+      "type": "belongs-to"
+    },
+    {
+      "from": "E03-Th01-S02",
+      "to": "E03-Th01",
+      "type": "belongs-to"
+    },
+    {
+      "from": "E05-Th02-S01",
+      "to": "E05-Th02",
+      "type": "belongs-to"
+    },
+    {
+      "from": "E02-Th05-S01",
+      "to": "E02-Th05",
+      "type": "belongs-to"
+    },
+    {
+      "from": "E02-Th03-S01",
+      "to": "E02-Th03",
+      "type": "belongs-to"
+    },
+    {
+      "from": "E07-Th02-S01",
+      "to": "E07-Th02",
+      "type": "belongs-to"
+    },
+    {
+      "from": "E07-Th01-S01",
+      "to": "E07-Th01",
+      "type": "belongs-to"
+    },
+    {
+      "from": "E03-Th01-S01",
+      "to": "E03-Th01",
+      "type": "belongs-to"
+    },
+    {
+      "from": "E04-Th05-S01",
+      "to": "E04-Th05",
+      "type": "belongs-to"
+    },
+    {
+      "from": "E04-Th02-S01",
+      "to": "E04-Th02",
+      "type": "belongs-to"
+    },
+    {
+      "from": "E03-Th03-S01",
+      "to": "E03-Th03",
+      "type": "belongs-to"
+    },
+    {
+      "from": "E03-Th04-S01",
+      "to": "E03-Th04",
+      "type": "belongs-to"
+    },
+    {
+      "from": "E02-Th02-S01",
+      "to": "E02-Th02",
+      "type": "belongs-to"
+    },
+    {
+      "from": "E07-Th03-S01",
+      "to": "E07-Th03",
+      "type": "belongs-to"
+    },
+    {
+      "from": "E07-Th04-S01",
+      "to": "E07-Th04",
+      "type": "belongs-to"
+    },
+    {
+      "from": "E01-Th02-S01",
+      "to": "E01-Th02",
+      "type": "belongs-to"
+    },
+    {
+      "from": "E01-Th03-S03",
+      "to": "E01-Th03",
+      "type": "belongs-to"
+    },
+    {
+      "from": "E06-Th03-S01",
+      "to": "E06-Th03",
+      "type": "belongs-to"
+    },
+    {
+      "from": "E01-Th01-S02",
+      "to": "E01-Th01",
+      "type": "belongs-to"
+    },
+    {
+      "from": "E02-Th01-S01",
+      "to": "E02-Th01",
+      "type": "belongs-to"
+    },
+    {
+      "from": "E01-Th01-S01",
+      "to": "E01-Th01",
+      "type": "belongs-to"
+    },
+    {
+      "from": "E03-Th02-S01",
+      "to": "E03-Th02",
+      "type": "belongs-to"
+    },
+    {
+      "from": "E01-Th03-S01",
+      "to": "E01-Th03",
+      "type": "belongs-to"
+    },
+    {
+      "from": "E04-Th01-S01",
+      "to": "E04-Th01",
+      "type": "belongs-to"
+    },
+    {
+      "from": "E08-Th01-S01",
+      "to": "E08-Th01",
+      "type": "belongs-to"
+    },
+    {
+      "from": "E06-Th01-S01",
+      "to": "E06-Th01",
+      "type": "belongs-to"
+    }
+  ]
+}

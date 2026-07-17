@@ -1,0 +1,9 @@
+{
+  "name": "@grofast/admin",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Admin + ops dashboard (React) — screens SC-028..SC-045. Implemented in E07.",
+  "scripts": {
+    "test": "echo \"no tests yet — E07\" && exit 0"
+  }
+}

@@ -1,0 +1,1068 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>02b — System Architecture (Build Thread) — System Architecture</title>
+<style>
+  :root {
+    --bg: #f8fafc;
+    --panel: #ffffff;
+    --ink: #0f172a;
+    --ink-2: #334155;
+    --muted: #64748b;
+    --border: #e2e8f0;
+    --accent: #1f6feb;
+    --accent-soft: #dbeafe;
+    --code-bg: #f1f5f9;
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0;
+    padding: 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    line-height: 1.55;
+  }
+  header.doc-header {
+    padding: 28px 36px 16px;
+    border-bottom: 1px solid var(--border);
+    background: var(--panel);
+  }
+  header.doc-header h1 { margin: 0; font-size: 26px; }
+  header.doc-header .meta { margin-top: 6px; color: var(--muted); font-size: 13px; }
+  header.doc-header .meta strong { color: var(--ink-2); }
+
+  nav.tabs {
+    display: flex;
+    gap: 2px;
+    padding: 0 24px;
+    background: var(--panel);
+    border-bottom: 1px solid var(--border);
+    overflow-x: auto;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+  }
+  nav.tabs button {
+    border: 0;
+    background: transparent;
+    padding: 14px 16px;
+    font: inherit;
+    font-size: 13.5px;
+    color: var(--muted);
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    white-space: nowrap;
+  }
+  nav.tabs button:hover { color: var(--ink); }
+  nav.tabs button.active {
+    color: var(--accent);
+    border-bottom-color: var(--accent);
+    font-weight: 600;
+  }
+
+  main {
+    padding: 28px 36px 80px;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  section.tab-panel { display: none; }
+  section.tab-panel.active { display: block; }
+
+  h2 { font-size: 20px; margin-top: 0; margin-bottom: 14px; }
+  h3 { font-size: 16px; margin-top: 24px; color: var(--ink-2); }
+  h4 { font-size: 14px; margin-top: 18px; color: var(--ink-2); }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 12px 0;
+    font-size: 13.5px;
+    background: var(--panel);
+  }
+  th, td {
+    padding: 8px 10px;
+    border: 1px solid var(--border);
+    text-align: left;
+    vertical-align: top;
+  }
+  th { background: #f1f5f9; font-weight: 600; }
+
+  code {
+    background: var(--code-bg);
+    padding: 1px 6px;
+    border-radius: 4px;
+    font-family: 'SF Mono', Menlo, Consolas, monospace;
+    font-size: 12.5px;
+    color: #b91c1c;
+  }
+  pre {
+    background: var(--code-bg);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 12px 14px;
+    overflow-x: auto;
+    font-family: 'SF Mono', Menlo, Consolas, monospace;
+    font-size: 12.5px;
+    line-height: 1.45;
+  }
+  pre code { background: transparent; padding: 0; color: inherit; }
+
+  blockquote {
+    border-left: 3px solid var(--border);
+    margin: 10px 0;
+    padding: 6px 14px;
+    color: var(--muted);
+    background: #f8fafc;
+  }
+
+  .panel {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 18px 22px;
+    margin-bottom: 18px;
+  }
+
+  /* Box-and-arrow architecture diagram */
+  .arch-diagram {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 24px;
+    margin: 16px 0;
+    overflow-x: auto;
+  }
+  .arch-diagram svg { display: block; max-width: 100%; height: auto; }
+  .arch-box {
+    fill: var(--accent-soft);
+    stroke: var(--accent);
+    stroke-width: 1.5;
+  }
+  .arch-box-ext {
+    fill: #fef3c7;
+    stroke: #d97706;
+  }
+  .arch-box-store {
+    fill: #dcfce7;
+    stroke: #16a34a;
+  }
+  .arch-box-text {
+    font-family: -apple-system, sans-serif;
+    font-size: 13px;
+    fill: var(--ink);
+  }
+  .arch-arrow {
+    stroke: var(--ink-2);
+    stroke-width: 1.5;
+    fill: none;
+    marker-end: url(#arrow);
+  }
+  .arch-arrow-async {
+    stroke: var(--ink-2);
+    stroke-width: 1.5;
+    fill: none;
+    stroke-dasharray: 5 4;
+    marker-end: url(#arrow);
+  }
+
+  ul, ol { padding-left: 22px; }
+  li { margin: 4px 0; }
+
+  .badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 999px;
+    font-size: 11.5px;
+    font-weight: 600;
+    margin-right: 6px;
+  }
+  .badge.ok    { background: #dcfce7; color: #166534; }
+  .badge.warn  { background: #fef3c7; color: #92400e; }
+  .badge.open  { background: #fee2e2; color: #991b1b; }
+
+  footer.doc-footer {
+    padding: 20px 36px;
+    color: var(--muted);
+    font-size: 12px;
+    border-top: 1px solid var(--border);
+    background: var(--panel);
+  }
+</style>
+</head>
+<body>
+
+<header class="doc-header">
+  <h1>02b — System Architecture (Build Thread)</h1>
+  <div class="meta">
+    <strong>Project:</strong>  ·
+    <strong>ID:</strong>  ·
+    <strong>Phase:</strong> 02b · System Architecture ·
+    <strong>Status:</strong> draft ·
+    <strong>Last updated:</strong> 2026-07-10 07:46 UTC
+  </div>
+</header>
+
+<nav class="tabs" id="tabs">
+  <!-- buttons injected by JS -->
+</nav>
+
+<main>
+<section class="tab-panel active" id="tab-0" data-title="Overview"><div class='panel'><h2>1. Overview &amp; objectives</h2><p><em>One paragraph. What this architecture optimizes for, what it deliberately does not.</em></p>
+<p>This architecture optimizes for <strong>launch velocity with clean seams</strong>: one modular monolith (<code>grofast-core</code>) plus two thin satellite deployables (realtime gateway, async workers) serving all four V1 clients, on one Postgres+PostGIS system of record, with an event backbone (transactional outbox → Redpanda) that makes every order/stock/money mutation observable, auditable, and replayable. It is sized for 1 city / 60 stores / 10k orders/day and scales 10× by scale-out plus a pre-declared service-extraction order (§4) — <strong>it deliberately does not</strong> ship 20 microservices, multi-region DR, a heavyweight service mesh, or ML-driven ETA/dispatch on day 1. Deliberate trade-offs: single region (India) with multi-AZ instead of multi-region; Meilisearch instead of OpenSearch until catalog/scale demands it; Kafka-API-compatible Redpanda instead of full Kafka to keep ops burden near zero while preserving the migration path.</p></div></section>
+<section class="tab-panel" id="tab-1" data-title="Tech stack"><div class='panel'><h2>2. Tech stack</h2><p><em>Per choice: <strong>what</strong>, <strong>why</strong>, <strong>alternatives considered</strong>, <strong>rejection reason</strong>.</em></p>
+<table>
+<thead>
+<tr>
+<th>Layer</th>
+<th>Choice</th>
+<th>Why</th>
+<th>Alternatives considered</th>
+<th>Why rejected</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Frontend (customer web + admin)</td>
+<td>React 18 + Next.js (customer storefront, SSR/ISR for SEO + speed); React + Vite SPA (admin dashboard)</td>
+<td>One React skill set across all web surfaces; Next.js ISR gives cached catalog pages (NFR-1); admin needs no SSR</td>
+<td>Vue/Nuxt; SvelteKit; server-rendered templates</td>
+<td>Smaller ecosystem overlap with React Native; team/AI-tool fluency highest in React</td>
+</tr>
+<tr>
+<td>Mobile (customer Android+iOS, rider Android)</td>
+<td>React Native (TypeScript), shared design-system package with web</td>
+<td>Two apps from one codebase + shared types with backend; OTA updates (CodePush-class) for fast iteration; meets NFR-9 with Hermes</td>
+<td>Flutter; native Kotlin/Swift</td>
+<td>Flutter forks the language (Dart) away from the TS stack; dual-native doubles effort for a 4-client V1</td>
+</tr>
+<tr>
+<td>Backend</td>
+<td>Node.js 20 + TypeScript + NestJS <strong>modular monolith</strong> (<code>grofast-core</code>), module-per-domain with enforced import boundaries</td>
+<td>NestJS modules give real compile-time seams (DI, per-module providers) — the monolith-with-seams strategy depends on this; one language with all clients; async-I/O model fits an I/O-bound order platform; p95 targets (NFR-1/2) comfortably met with Redis/Meili in front</td>
+<td>Go (chi/echo); Kotlin + Spring Boot; Python + Django</td>
+<td>Go: better raw perf but slower CRUD/admin velocity and splits the language stack; Spring: heavier operationally, JVM warmup vs container autoscaling; Django: weakest typing story for a money-handling system</td>
+</tr>
+<tr>
+<td>Database</td>
+<td>PostgreSQL 16 + <strong>PostGIS</strong> (managed, multi-AZ, 1 read replica)</td>
+<td>Single system of record: relational integrity for orders/payments/stock, <code>SELECT … FOR UPDATE</code> for atomic reservation (FR-12), PostGIS <code>ST_Contains</code> for zone serviceability (FR-3/24), JSONB for flexible SKU attributes</td>
+<td>MySQL; CockroachDB; MongoDB</td>
+<td>MySQL: no PostGIS-class geo; Cockroach: multi-region features we don't need at 10× cost/complexity; Mongo: no serializable multi-row transactions culture for the reservation path</td>
+</tr>
+<tr>
+<td>Search</td>
+<td><strong>Meilisearch</strong> (typo-tolerant, sub-50 ms) fed by catalog change events</td>
+<td>FR-5 typo tolerance ("atta"/"aata") is native; trivially operated (single binary); index of ≤ ~50k SKUs × 60 stores is tiny</td>
+<td>OpenSearch/Elasticsearch; Postgres FTS + pg_trgm</td>
+<td>OpenSearch: cluster ops overhead unjustified at V1 scale — becomes the 10× replacement if facet/analytics search grows; PG FTS: weak typo tolerance, couples search load to system of record</td>
+</tr>
+<tr>
+<td>Cache</td>
+<td>Redis 7 (managed, HA pair) — catalog/serviceability cache, cart hot copy, sessions, rate limits, <strong>GEO set for live rider positions</strong>, pub/sub for tracking fan-out</td>
+<td>One tool covers cache + geo + ephemeral fan-out; <code>GEOSEARCH</code> answers "nearest online rider" for dispatch (FR-18)</td>
+<td>Memcached; DynamoDB/DAX-class KV</td>
+<td>Memcached: no GEO/pub-sub/persistence; cloud KV: vendor lock before cloud vendor is even chosen</td>
+</tr>
+<tr>
+<td>Queue / pub-sub (event backbone)</td>
+<td><strong>Transactional outbox in Postgres → Redpanda</strong> (Kafka-API-compatible, 3-node)</td>
+<td>Outbox guarantees exactly-once-published domain events with the DB commit (no dual-write); Redpanda gives Kafka semantics (ordered, replayable log — needed for audit, analytics replay, NFR-10) at a fraction of Kafka's ops cost (no ZooKeeper/JVM); Kafka API = drop-in migration to managed Kafka at 10×</td>
+<td>Apache Kafka (managed); RabbitMQ; SQS/SNS-class; Postgres LISTEN/NOTIFY only</td>
+<td>Managed Kafka: blocked on cloud vendor [OPEN] and overkill at 10k orders/day; RabbitMQ: no replayable log for analytics/audit backfill; SQS-class: cloud lock-in + no ordered replay; LISTEN/NOTIFY: no durability/replay, fine only as a latency optimization</td>
+</tr>
+<tr>
+<td>Auth</td>
+<td>Phone-OTP (SMS via DLT provider) → short-lived JWT (15 min, RS256) + rotating refresh tokens (revocable, stored hashed); admin: email+password+TOTP; RBAC claims in JWT, permission checks server-side</td>
+<td>FR-1/FR-29, NFR-5; self-hosted keeps per-OTP cost = SMS cost only</td>
+<td>Auth0/Cognito-class IDaaS; session cookies</td>
+<td>IDaaS: per-MAU pricing hostile to high-volume consumer apps in India, phone-OTP flows still need custom SMS/DLT work anyway; pure sessions: poor fit for 3 mobile/native clients</td>
+</tr>
+<tr>
+<td>Hosting</td>
+<td>Managed Kubernetes on <strong>[OPEN] cloud vendor</strong> (AWS/GCP-class, BRS §13, owner: Eng lead), India region (Mumbai/Delhi), multi-AZ; managed Postgres + Redis; object storage for images/invoices; CDN + WAF at edge</td>
+<td>K8s keeps the platform cloud-portable while the vendor decision is open; managed data services cut on-call load</td>
+<td>Bare VMs + docker-compose; serverless (Lambda-class); PaaS (Render/Railway-class)</td>
+<td>VMs: manual scaling violates NFR-4; serverless: WebSocket + long-lived consumers awkward, cold starts vs NFR-2; PaaS: India-region availability + PostGIS/Redpanda support inconsistent</td>
+</tr>
+<tr>
+<td>Observability</td>
+<td>OpenTelemetry SDK (traces + metrics) → Prometheus + Grafana + Loki (or cloud-managed equivalents once vendor lands); Sentry for client crashes; SLO burn-rate alerts</td>
+<td>NFR-8: vendor-neutral instrumentation now, backend swappable later; trace the whole order path</td>
+<td>Datadog-class SaaS</td>
+<td>Cost at tracking-event volumes; revisit post-launch with real data</td>
+</tr>
+<tr>
+<td>CI/CD</td>
+<td>GitHub Actions → container build → staging auto-deploy → prod deploy with manual gate; Terraform for all infra (IaC); SQL-first migrations (Flyway/dbmate-class) run as pre-deploy job</td>
+<td>Boring, universal, AI-tool-friendly; IaC required to keep 3 envs honest</td>
+<td>GitLab CI; Jenkins; ArgoCD (GitOps)</td>
+<td>GitLab/Jenkins: no advantage for this team; ArgoCD deferred — worthwhile at more services, noise at 3 deployables</td>
+</tr>
+</tbody>
+</table>
+<h3 id="2a-event-backbone-decision-summary">2a. Event backbone decision (summary)</h3>
+<p><strong>Outbox → Redpanda.</strong> The outbox pattern (events written in the same Postgres transaction as the state change, relayed by a poller) is non-negotiable for correctness on the order/stock/money path. Redpanda is chosen over "no broker at all" because five consumers (notifications, dispatch, analytics, audit, search-indexer) polling the outbox table directly would turn Postgres into a message bus; and over full Kafka because a 3-node single-binary Redpanda is operable by a small team. The Kafka API compatibility is the 10× escape hatch (D-3).</p></div></section>
+<section class="tab-panel" id="tab-2" data-title="System topology"><div class="arch-diagram"><svg viewBox="0 0 708 816" xmlns="http://www.w3.org/2000/svg"><defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#334155"/></marker></defs><rect class="arch-box" x="24" y="24" width="180" height="64" rx="6" ry="6"/><text class="arch-box-text" x="114" y="48" text-anchor="middle" font-weight="600">Customer mobile app (Android+iOS, React Native)</text><text class="arch-box-text" x="114" y="68" text-anchor="middle" fill="#64748b" font-size="11">C-1 · client</text><rect class="arch-box" x="264" y="24" width="180" height="64" rx="6" ry="6"/><text class="arch-box-text" x="354" y="48" text-anchor="middle" font-weight="600">Customer web (Next.js)</text><text class="arch-box-text" x="354" y="68" text-anchor="middle" fill="#64748b" font-size="11">C-2 · client</text><rect class="arch-box" x="504" y="24" width="180" height="64" rx="6" ry="6"/><text class="arch-box-text" x="594" y="48" text-anchor="middle" font-weight="600">Rider app (Android, React Native)</text><text class="arch-box-text" x="594" y="68" text-anchor="middle" fill="#64748b" font-size="11">C-3 · client</text><rect class="arch-box" x="24" y="138" width="180" height="64" rx="6" ry="6"/><text class="arch-box-text" x="114" y="162" text-anchor="middle" font-weight="600">Admin + ops dashboard (React SPA)</text><text class="arch-box-text" x="114" y="182" text-anchor="middle" fill="#64748b" font-size="11">C-4 · client</text><rect class="arch-box arch-box-ext" x="264" y="138" width="180" height="64" rx="6" ry="6"/><text class="arch-box-text" x="354" y="162" text-anchor="middle" font-weight="600">CDN + WAF edge</text><text class="arch-box-text" x="354" y="182" text-anchor="middle" fill="#64748b" font-size="11">C-5 · external/managed</text><rect class="arch-box" x="504" y="138" width="180" height="64" rx="6" ry="6"/><text class="arch-box-text" x="594" y="162" text-anchor="middle" font-weight="600">API gateway / BFF</text><text class="arch-box-text" x="594" y="182" text-anchor="middle" fill="#64748b" font-size="11">C-6 · service</text><rect class="arch-box" x="24" y="252" width="180" height="64" rx="6" ry="6"/><text class="arch-box-text" x="114" y="276" text-anchor="middle" font-weight="600">`grofast-core` (modular monolith)</text><text class="arch-box-text" x="114" y="296" text-anchor="middle" fill="#64748b" font-size="11">C-7 · service</text><rect class="arch-box" x="264" y="252" width="180" height="64" rx="6" ry="6"/><text class="arch-box-text" x="354" y="276" text-anchor="middle" font-weight="600">Realtime gateway</text><text class="arch-box-text" x="354" y="296" text-anchor="middle" fill="#64748b" font-size="11">C-8 · service</text><rect class="arch-box" x="504" y="252" width="180" height="64" rx="6" ry="6"/><text class="arch-box-text" x="594" y="276" text-anchor="middle" font-weight="600">Worker pool</text><text class="arch-box-text" x="594" y="296" text-anchor="middle" fill="#64748b" font-size="11">C-9 · service</text><rect class="arch-box arch-box-store" x="24" y="366" width="180" height="64" rx="6" ry="6"/><text class="arch-box-text" x="114" y="390" text-anchor="middle" font-weight="600">PostgreSQL 16 + PostGIS</text><text class="arch-box-text" x="114" y="410" text-anchor="middle" fill="#64748b" font-size="11">C-10 · store</text><rect class="arch-box arch-box-store" x="264" y="366" width="180" height="64" rx="6" ry="6"/><text class="arch-box-text" x="354" y="390" text-anchor="middle" font-weight="600">Redis 7</text><text class="arch-box-text" x="354" y="410" text-anchor="middle" fill="#64748b" font-size="11">C-11 · store</text><rect class="arch-box arch-box-store" x="504" y="366" width="180" height="64" rx="6" ry="6"/><text class="arch-box-text" x="594" y="390" text-anchor="middle" font-weight="600">Meilisearch</text><text class="arch-box-text" x="594" y="410" text-anchor="middle" fill="#64748b" font-size="11">C-12 · store</text><rect class="arch-box arch-box-store" x="24" y="480" width="180" height="64" rx="6" ry="6"/><text class="arch-box-text" x="114" y="504" text-anchor="middle" font-weight="600">Redpanda</text><text class="arch-box-text" x="114" y="524" text-anchor="middle" fill="#64748b" font-size="11">C-13 · store</text><rect class="arch-box arch-box-store" x="264" y="480" width="180" height="64" rx="6" ry="6"/><text class="arch-box-text" x="354" y="504" text-anchor="middle" font-weight="600">Object storage</text><text class="arch-box-text" x="354" y="524" text-anchor="middle" fill="#64748b" font-size="11">C-14 · store</text><rect class="arch-box arch-box-store" x="504" y="480" width="180" height="64" rx="6" ry="6"/><text class="arch-box-text" x="594" y="504" text-anchor="middle" font-weight="600">Analytics warehouse (ClickHouse-class)</text><text class="arch-box-text" x="594" y="524" text-anchor="middle" fill="#64748b" font-size="11">C-15 · store</text><rect class="arch-box arch-box-ext" x="24" y="594" width="180" height="64" rx="6" ry="6"/><text class="arch-box-text" x="114" y="618" text-anchor="middle" font-weight="600">Payment gateway ([OPEN] — Razorpay-class)</text><text class="arch-box-text" x="114" y="638" text-anchor="middle" fill="#64748b" font-size="11">C-16 · external</text><rect class="arch-box arch-box-ext" x="264" y="594" width="180" height="64" rx="6" ry="6"/><text class="arch-box-text" x="354" y="618" text-anchor="middle" font-weight="600">SMS / DLT provider</text><text class="arch-box-text" x="354" y="638" text-anchor="middle" fill="#64748b" font-size="11">C-17 · external</text><rect class="arch-box arch-box-ext" x="504" y="594" width="180" height="64" rx="6" ry="6"/><text class="arch-box-text" x="594" y="618" text-anchor="middle" font-weight="600">FCM / APNs</text><text class="arch-box-text" x="594" y="638" text-anchor="middle" fill="#64748b" font-size="11">C-18 · external</text><rect class="arch-box arch-box-ext" x="24" y="708" width="180" height="64" rx="6" ry="6"/><text class="arch-box-text" x="114" y="732" text-anchor="middle" font-weight="600">Maps provider ([OPEN])</text><text class="arch-box-text" x="114" y="752" text-anchor="middle" fill="#64748b" font-size="11">C-19 · external</text><line class="arch-arrow" x1="594" y1="170" x2="114" y2="284"/><text x="354" y="223" text-anchor="middle" font-size="10" fill="#475569">HTTP (in-cluster)</text><line class="arch-arrow" x1="114" y1="284" x2="114" y2="398"/><text x="114" y="337" text-anchor="middle" font-size="10" fill="#475569">Postgres wire (TLS)</text><line class="arch-arrow" x1="114" y1="284" x2="354" y2="398"/><text x="234" y="337" text-anchor="middle" font-size="10" fill="#475569">Redis protocol</text><line class="arch-arrow" x1="114" y1="284" x2="594" y2="398"/><text x="354" y="337" text-anchor="middle" font-size="10" fill="#475569">HTTPS</text><line class="arch-arrow-async" x1="114" y1="284" x2="114" y2="512"/><text x="114" y="394" text-anchor="middle" font-size="10" fill="#475569">Kafka protocol</text><line class="arch-arrow-async" x1="594" y1="284" x2="114" y2="512"/><text x="354" y="394" text-anchor="middle" font-size="10" fill="#475569">Kafka protocol</text><line class="arch-arrow-async" x1="354" y1="284" x2="354" y2="398"/><text x="354" y="337" text-anchor="middle" font-size="10" fill="#475569">Redis pub/sub + GEO</text></svg></div><div class='panel'><h2>3. System architecture (logical topology)</h2><blockquote>
+<p>Describe in prose, then drop a textual description that the HTML renderer turns into a box-and-arrow diagram. <strong>No Mermaid</strong> — the HTML view uses real positioned boxes.</p>
+</blockquote>
+<p><strong>Diagram type:</strong> <code>layered</code></p>
+<p><strong>Prose.</strong> Four layers. <strong>Client layer:</strong> customer mobile app, customer web, rider app, admin dashboard. <strong>Edge layer:</strong> CDN (static assets, catalog images) and WAF/rate-limiter in front of a single API gateway that terminates TLS, validates JWTs, and routes to <code>grofast-core</code> (REST/JSON) or the realtime gateway (WebSocket). <strong>Application layer:</strong> <code>grofast-core</code> — the modular monolith (modules: auth, serviceability, catalog, search-indexer, cart, pricing, orders, payments-adapter, inventory, partner-feeds, dispatch, notifications, audit, admin/RBAC) — plus two satellites: the <strong>realtime gateway</strong> (stateless WebSocket fan-out for rider GPS and order-status pushes, backed by Redis pub/sub) and the <strong>worker pool</strong> (same codebase, different entrypoint: Redpanda consumers for dispatch offers, notification delivery, partner-feed ingestion, payment reconciliation, search indexing, analytics forwarding). <strong>Data layer:</strong> Postgres+PostGIS (system of record), Redis (cache/geo/pub-sub), Meilisearch (search reads), Redpanda (event log), object storage (images, invoices, delivery-proof photos, CSV feeds), and the analytics warehouse (ClickHouse-class, [OPEN] with cloud vendor). <strong>Externals:</strong> payment gateway ([OPEN], Razorpay-class) reached outbound and via inbound webhooks; SMS/DLT provider; FCM/APNs; maps provider ([OPEN]).</p>
+<p>Box-and-arrow layout for the renderer: clients (4 boxes, top row) → edge (CDN | WAF+API gateway, second row) → application (grofast-core center, realtime gateway right, worker pool left, third row) → data (Postgres, Redis, Meilisearch, Redpanda, object storage, warehouse, bottom row); externals (payment gateway, SMS/DLT, FCM/APNs, maps) as a right-hand column connected to payments-adapter, notifications workers, and clients respectively; webhook arrow from payment gateway back into the API gateway.</p>
+<h3 id="3a-components">3a. Components</h3>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Component</th>
+<th>Type</th>
+<th>Responsibilities</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>C-1</td>
+<td>Customer mobile app (Android+iOS, React Native)</td>
+<td>client</td>
+<td>Browse, cart, checkout, pay, live tracking, ratings (FR-1..16, FR-30)</td>
+</tr>
+<tr>
+<td>C-2</td>
+<td>Customer web (Next.js)</td>
+<td>client</td>
+<td>Same customer journey on responsive web</td>
+</tr>
+<tr>
+<td>C-3</td>
+<td>Rider app (Android, React Native)</td>
+<td>client</td>
+<td>Online/offline toggle, job offers, pickup/drop flow, GPS beacon, earnings (FR-18..20)</td>
+</tr>
+<tr>
+<td>C-4</td>
+<td>Admin + ops dashboard (React SPA)</td>
+<td>client</td>
+<td>Picker workflow, catalog/inventory/zone/partner/order management, exception queue, analytics, RBAC (FR-17, FR-21..27, FR-29)</td>
+</tr>
+<tr>
+<td>C-5</td>
+<td>CDN + WAF edge</td>
+<td>external/managed</td>
+<td>Static assets + image delivery; L7 protection, rate limiting, TLS</td>
+</tr>
+<tr>
+<td>C-6</td>
+<td>API gateway / BFF</td>
+<td>service</td>
+<td>Single ingress: JWT validation, routing, request shaping per client, idempotency-key enforcement on writes, payment-webhook ingress</td>
+</tr>
+<tr>
+<td>C-7</td>
+<td><code>grofast-core</code> (modular monolith)</td>
+<td>service</td>
+<td>All domain logic in bounded modules: auth, serviceability, catalog, cart, pricing/coupons, orders (state machine + outbox), payments-adapter, inventory, partner-feeds, dispatch, notifications API, audit, admin/RBAC</td>
+</tr>
+<tr>
+<td>C-8</td>
+<td>Realtime gateway</td>
+<td>service</td>
+<td>WebSocket termination for rider GPS ingest + tracking/status fan-out to customers &amp; ops; stateless, Redis pub/sub backed</td>
+</tr>
+<tr>
+<td>C-9</td>
+<td>Worker pool</td>
+<td>service</td>
+<td>Async Redpanda consumers: dispatch offer engine, notification sender, partner-feed ingestion, payment reconciliation, search indexer, analytics forwarder, audit writer</td>
+</tr>
+<tr>
+<td>C-10</td>
+<td>PostgreSQL 16 + PostGIS</td>
+<td>store</td>
+<td>System of record: all entities in §6; zone geometry; transactional outbox table</td>
+</tr>
+<tr>
+<td>C-11</td>
+<td>Redis 7</td>
+<td>store</td>
+<td>Catalog/serviceability cache, cart hot copy, OTP/rate-limit counters, rider GEO set, pub/sub channels for tracking</td>
+</tr>
+<tr>
+<td>C-12</td>
+<td>Meilisearch</td>
+<td>store</td>
+<td>Typo-tolerant product search index per store availability (FR-5)</td>
+</tr>
+<tr>
+<td>C-13</td>
+<td>Redpanda</td>
+<td>store</td>
+<td>Durable ordered event log: <code>order.*</code>, <code>payment.*</code>, <code>stock.*</code>, <code>rider.*</code>, <code>feed.*</code>, <code>audit.*</code> topics</td>
+</tr>
+<tr>
+<td>C-14</td>
+<td>Object storage</td>
+<td>store</td>
+<td>Product images, GST invoices (PDF), delivery-proof photos, partner CSV feeds</td>
+</tr>
+<tr>
+<td>C-15</td>
+<td>Analytics warehouse (ClickHouse-class)</td>
+<td>store</td>
+<td>Event sink → KPI dashboards, daily digest, CSV export (FR-27); engine choice [OPEN] with cloud vendor</td>
+</tr>
+<tr>
+<td>C-16</td>
+<td>Payment gateway ([OPEN] — Razorpay-class)</td>
+<td>external</td>
+<td>UPI/cards/wallets intents, captures, refunds, tokenization (PCI), webhooks</td>
+</tr>
+<tr>
+<td>C-17</td>
+<td>SMS / DLT provider</td>
+<td>external</td>
+<td>OTP + transactional SMS with registered DLT templates</td>
+</tr>
+<tr>
+<td>C-18</td>
+<td>FCM / APNs</td>
+<td>external</td>
+<td>Push notifications to customer + rider apps</td>
+</tr>
+<tr>
+<td>C-19</td>
+<td>Maps provider ([OPEN])</td>
+<td>external</td>
+<td>Geocoding, map tiles, navigation handoff for riders</td>
+</tr>
+</tbody>
+</table>
+<h3 id="3b-connections">3b. Connections</h3>
+<table>
+<thead>
+<tr>
+<th>From</th>
+<th>To</th>
+<th>Protocol</th>
+<th>Direction</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>C-1/C-2/C-3/C-4</td>
+<td>C-6</td>
+<td>HTTPS (REST/JSON)</td>
+<td>sync</td>
+<td>All API calls (via C-5 edge)</td>
+</tr>
+<tr>
+<td>C-1/C-2/C-3/C-4</td>
+<td>C-8</td>
+<td>WSS (WebSocket)</td>
+<td>async</td>
+<td>Live tracking, job offers, order-status push</td>
+</tr>
+<tr>
+<td>C-6</td>
+<td>C-7</td>
+<td>HTTP (in-cluster)</td>
+<td>sync</td>
+<td>Routed API traffic</td>
+</tr>
+<tr>
+<td>C-7</td>
+<td>C-10</td>
+<td>Postgres wire (TLS)</td>
+<td>sync</td>
+<td>All reads/writes of record; outbox insert in-transaction</td>
+</tr>
+<tr>
+<td>C-7</td>
+<td>C-11</td>
+<td>Redis protocol</td>
+<td>sync</td>
+<td>Cache read/write, cart, rate limits, GEO queries</td>
+</tr>
+<tr>
+<td>C-7</td>
+<td>C-12</td>
+<td>HTTPS</td>
+<td>sync</td>
+<td>Search queries (catalog module)</td>
+</tr>
+<tr>
+<td>C-7</td>
+<td>C-13</td>
+<td>Kafka protocol</td>
+<td>async</td>
+<td>Outbox relay publishes domain events</td>
+</tr>
+<tr>
+<td>C-9</td>
+<td>C-13</td>
+<td>Kafka protocol</td>
+<td>async</td>
+<td>Consumer groups per worker type</td>
+</tr>
+<tr>
+<td>C-9</td>
+<td>C-10 / C-11 / C-12 / C-14 / C-15</td>
+<td>native</td>
+<td>sync</td>
+<td>Workers write projections, indexes, warehouse rows</td>
+</tr>
+<tr>
+<td>C-8</td>
+<td>C-11</td>
+<td>Redis pub/sub + GEO</td>
+<td>async</td>
+<td>GPS ingest → GEO set write + channel publish; fan-out subscribe</td>
+</tr>
+<tr>
+<td>C-7 (payments-adapter)</td>
+<td>C-16</td>
+<td>HTTPS</td>
+<td>sync</td>
+<td>Create intent, verify, capture, refund</td>
+</tr>
+<tr>
+<td>C-16</td>
+<td>C-6 → C-7</td>
+<td>HTTPS webhook (signed)</td>
+<td>async</td>
+<td>Payment/refund status truth</td>
+</tr>
+<tr>
+<td>C-9 (notification sender)</td>
+<td>C-17 / C-18</td>
+<td>HTTPS</td>
+<td>async</td>
+<td>SMS (DLT) and push delivery</td>
+</tr>
+<tr>
+<td>C-7 (partner-feeds)</td>
+<td>partner systems</td>
+<td>HTTPS API / CSV upload (to C-14)</td>
+<td>both</td>
+<td>Stock/price ingestion (FR-23)</td>
+</tr>
+<tr>
+<td>C-1/C-3</td>
+<td>C-19</td>
+<td>HTTPS/SDK</td>
+<td>sync</td>
+<td>Geocoding, map tiles, navigation deep-link</td>
+</tr>
+</tbody>
+</table>
+<h3 id="35-per-component-rationale">3.5. Per-component rationale</h3>
+<p><em>(Added in v0.4 — Mod #5.)</em> Why each component exists as a separate component (not folded into another). Reviewer rejects components without rationale at <code>/architecture-freeze</code>._</p>
+<table>
+<thead>
+<tr>
+<th>Component ID</th>
+<th>Why this is a distinct component</th>
+<th>Failure mode if it didn't exist</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>C-5</td>
+<td>Edge concerns (DDoS, bot OTP abuse, image bandwidth) must die before app compute</td>
+<td>OTP-spam and scraper load lands on core; image traffic swamps API nodes</td>
+</tr>
+<tr>
+<td>C-6</td>
+<td>One choke point for authN, rate limits, idempotency keys, webhook ingress; lets core stay ignorant of client differences</td>
+<td>Cross-cutting policy re-implemented per module, drift → security holes</td>
+</tr>
+<tr>
+<td>C-7</td>
+<td>The deliberate monolith: one transaction boundary for order+stock+payment; one deploy</td>
+<td>(Its absence = microservices) distributed transactions for FR-12, 10× ops burden at V1</td>
+</tr>
+<tr>
+<td>C-8</td>
+<td>Connection fan-out scales by socket count, not request rate; a tracking spike must not evict order-path capacity (NFR-3)</td>
+<td>10k idle sockets pinned to core pods; a viral tracking hour degrades checkout</td>
+</tr>
+<tr>
+<td>C-9</td>
+<td>Async work (retries, batch feeds, offer timers) has a different failure/scaling profile; isolates consumer lag from API latency</td>
+<td>Slow SMS provider back-pressures API threads; feed ingestion spikes p95 (NFR-1)</td>
+</tr>
+<tr>
+<td>C-10</td>
+<td>Single system of record makes atomic stock reservation and audit truth possible</td>
+<td>Split-brain stock counts → OOS-after-order breaches Objective 5</td>
+</tr>
+<tr>
+<td>C-11</td>
+<td>Sub-ms reads for hot catalog/serviceability + GEO + pub/sub in one operable tool</td>
+<td>Every browse hits Postgres; NFR-1 p95 blown at peak</td>
+</tr>
+<tr>
+<td>C-12</td>
+<td>Typo-tolerant ranked search is a specialized engine's job</td>
+<td>FR-5 acceptance ("atta"/"aata") fails on SQL LIKE/FTS</td>
+</tr>
+<tr>
+<td>C-13</td>
+<td>Durable replayable fan-out decouples order commit from its 5+ downstream effects</td>
+<td>Notifications/analytics coupled into checkout transaction → NFR-2 blown, lost events on crash</td>
+</tr>
+<tr>
+<td>C-14</td>
+<td>Blobs don't belong in Postgres; invoices/proofs need cheap long retention</td>
+<td>DB bloat; delivery-proof photos (BR-8) unmanageable</td>
+</tr>
+<tr>
+<td>C-15</td>
+<td>Analytical scans (zone heatmaps, GMV rollups) must not run on the OLTP store</td>
+<td>FR-27 dashboards lock order tables; ops reports throttle checkout</td>
+</tr>
+</tbody>
+</table></div></section>
+<section class="tab-panel" id="tab-3" data-title="Service boundaries"><div class='panel'><h2>4. Service boundaries</h2><p><em>What is a separate service? What is a module inside another service? Why?</em></p>
+<table>
+<thead>
+<tr>
+<th>Service</th>
+<th>Owns these capabilities</th>
+<th>Why this is a separate service (not a module)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>grofast-core</code> (deployable 1)</td>
+<td>Modules: <strong>auth</strong> (OTP, JWT, refresh, RBAC), <strong>serviceability</strong> (zones, store selection, ETA params), <strong>catalog</strong> (SKU/category CRUD, per-store price), <strong>cart</strong>, <strong>pricing</strong> (fees, coupons, bill, GST invoice), <strong>orders</strong> (state machine, reservation, outbox), <strong>payments-adapter</strong> (gateway-agnostic port), <strong>inventory</strong> (dark-store stock, GRN, adjustments), <strong>partner-feeds</strong> (mapping, freshness), <strong>dispatch</strong> (assignment logic), <strong>notifications</strong> (template registry, dispatch API), <strong>audit</strong> (append API), <strong>admin</strong></td>
+<td>It isn't — it's the monolith. Modules communicate via in-process interfaces + domain events only; direct cross-module table access is lint-forbidden. This keeps FR-12's transaction atomic and V1 ops trivial</td>
+</tr>
+<tr>
+<td>Realtime gateway (deployable 2)</td>
+<td>WebSocket sessions, GPS ingest, tracking/status/job-offer push</td>
+<td>Different scaling axis (concurrent sockets), different availability posture; must survive core deploys without dropping tracking sessions</td>
+</tr>
+<tr>
+<td>Worker pool (deployable 3)</td>
+<td>All Redpanda consumers (dispatch offers, notifications delivery, feed ingestion, reconciliation, indexing, analytics, audit projection)</td>
+<td>Same codebase as core, separate entrypoint/scaling; consumer lag must never affect API p95</td>
+</tr>
+<tr>
+<td>Clients (4 deployables)</td>
+<td>Per §3a C-1..C-4</td>
+<td>Platform-mandated separation</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Pre-declared extraction order at 10× (NFR-4)</strong> — each seam is already a NestJS module with an event-driven contract, so extraction = new deployable + network call, no redesign:
+1. <strong>Catalog+search read path</strong> → dedicated read service (own replica + Meili→OpenSearch) — first to feel browse traffic.
+2. <strong>Dispatch + tracking</strong> → geo service (owns Redis GEO + realtime gateway) — first to feel rider-count growth and algorithmic iteration.
+3. <strong>Payments</strong> → isolated service (PCI blast-radius reduction, independent audit).
+4. <strong>Partner-feed ingestion</strong> → per-partner connector service as POS integrations deepen (FU-scope).
+5. <strong>Notifications</strong> → standalone as channels grow (WhatsApp, email).
+Orders + inventory + pricing stay fused the longest: they share the reservation transaction.</p></div></section>
+<section class="tab-panel" id="tab-4" data-title="Data flows"><div class='panel'><h2>5. Data flows (with example flows)</h2><p><em>For each major BRS feature, walk the request through the system.</em></p>
+<h3 id="5a-flow-checkout-payment-atomic-stock-reservation-fr-891012-br-23-nfr-2">5a. Flow: Checkout → payment → atomic stock reservation (FR-8/9/10/12, BR-2/3, NFR-2)</h3>
+<ol>
+<li>Client <code>POST /v1/checkout</code> with cart ID and address ID → gateway (C-6) validates JWT → orders module.</li>
+<li>Orders orchestrates synchronously: pricing revalidates lines + coupon (failure reason returned per FR-9); serviceability recomputes ETA from store load + rider availability (Redis) and returns the <strong>ETA promise</strong>; inventory soft-checks availability. Response: bill summary + payable amount + checkout-session ID.</li>
+<li>Client confirms → payments-adapter creates a gateway order/intent at C-16 with <strong>idempotency key = checkout-session ID</strong>; client SDK collects payment (UPI/card/wallet).</li>
+<li>Payment confirmation is <strong>server-verified</strong>: client callback triggers a verify call to the gateway API; the signed webhook (flow 5e) is the ultimate source of truth — whichever arrives first wins, both are idempotent on <code>gateway_payment_ref</code>.</li>
+<li>On verified capture, orders module opens <strong>one Postgres transaction</strong>: <code>SELECT … FOR UPDATE</code> on the <code>store_inventory</code> rows for all lines → decrement <code>available</code>, increment <code>reserved</code> (any shortfall → full rollback); insert <code>order</code> (state <code>PLACED</code>, ETA promise stored per BR-2) + <code>order_items</code> + <code>payment</code> row; insert outbox rows <code>order.placed</code>, <code>payment.captured</code>, <code>stock.reserved</code>; commit.</li>
+<li><strong>Reservation failure path:</strong> transaction rolls back, no order exists; payments-adapter auto-initiates refund (BR-4); client keeps cart intact with a clean failure (FR-12).</li>
+<li>Outbox relay publishes to Redpanda; workers fan out: notification (order-confirmed push, SMS fallback), picker-queue projection (dark store) or partner notification, analytics event, audit record.</li>
+<li>Client sees confirmation — steps 4–7 complete p95 &lt; 3 s (NFR-2); step 7 is off the critical path.</li>
+<li><strong>COD variant</strong> (FR-11, pending §13 BRS sign-off): steps 3–4 skipped; reservation at placement; BR-3's 15-min unpaid-hold logic does not apply; BR-5 cap checked in step 2.</li>
+</ol>
+<h3 id="5b-flow-dark-store-order-lifecycle-picking-packed-dispatch-delivered-fr-1718191328">5b. Flow: Dark-store order lifecycle — picking → packed → dispatch → delivered (FR-17/18/19/13/28)</h3>
+<ol>
+<li><code>order.placed</code> → picker-queue projection; order appears in the store's picker view (C-4) sorted by promised ETA.</li>
+<li>Picker accepts → state <code>PICKING</code> (state machine transition recorded with actor, per FR-26); pick list renders in store-layout order; each item barcode-scanned.</li>
+<li>OOS at pick → picker flags line → customer gets substitute-or-refund push with 60 s timeout → auto-refund of that line (FR-30); order continues partial.</li>
+<li>Pack complete → state <code>PACKED</code> (timestamps recorded) → outbox <code>order.packed</code>.</li>
+<li>Dispatch worker consumes <code>order.packed</code>: Redis <code>GEOSEARCH</code> finds nearest <strong>online, unassigned</strong> riders (BR-7: max 1 active order); creates <code>assignment</code> (state <code>OFFERED</code>, 30 s TTL) and pushes the offer via realtime gateway to the rider app.</li>
+<li>Decline/timeout → cascade to next-nearest rider; exhaustion → ops exception queue (FR-25) for force-assign.</li>
+<li>Rider accepts → assignment <code>ACCEPTED</code>; rider navigates to store (maps deep-link); pickup verified by OTP/scan → order <code>DISPATCHED</code> → customer tracking activates (flow 5d).</li>
+<li>At the door: delivery proof (OTP or photo → object storage) mandatory (BR-8); COD collection confirmed if applicable → order <code>DELIVERED</code>; GST invoice generated (BR-10) to object storage, linked in order history.</li>
+<li>Every transition emits outbox events → notifications (≤ 10 s, push→SMS fallback per FR-28), analytics, audit; ETA breach detection compares clock vs promised ETA and feeds the exception queue within 30 s.</li>
+</ol>
+<h3 id="5c-flow-partner-store-order-fr-23-br-16">5c. Flow: Partner-store order (FR-23, BR-1/6)</h3>
+<ol>
+<li>Serviceability resolves the customer's location to a zone whose serving store is a <strong>partner store</strong> (BR-1: exactly one store per order).</li>
+<li>Pre-checkout guard: partner's feed freshness checked; staler than 15 min → store listed as "delivery may take longer", excluded from fast-ETA promises (BR-6), wider ETA shown.</li>
+<li>Checkout runs flow 5a identically — partner stock rows live in the same <code>store_inventory</code> table (source = feed snapshot), so reservation is atomic the same way.</li>
+<li><code>order.placed</code> → partner-notification worker: push to partner dashboard session + SMS fallback; partner confirms and packs, marks <code>READY</code> from their dashboard view.</li>
+<li>Partner reject / confirmation timeout (ops-configurable) → auto-cancel: reserved stock released, refund auto-initiated (BR-4), customer notified, order lands in exception queue and the partner's fill-rate scorecard (BRS risk #1).</li>
+<li>From <code>READY</code>, dispatch and delivery proceed exactly as flow 5b steps 5–9; commission line recorded on the order for settlement reporting.</li>
+</ol>
+<h3 id="5d-flow-rider-live-tracking-fan-out-fr-13-nfr-7">5d. Flow: Rider live-tracking fan-out (FR-13, NFR-7)</h3>
+<ol>
+<li>Rider app streams GPS every 4 s over its WebSocket to the realtime gateway (batched/offline-buffered per NFR-9).</li>
+<li>Gateway writes the position to the Redis GEO set (dispatch reads this for nearest-rider) and publishes to Redis pub/sub channel <code>track:{order_id}</code>.</li>
+<li>All realtime-gateway pods subscribe to channels their local sockets care about; the customer's tracking session and any ops-dashboard watcher receive the position push ≤ 5 s from GPS fix (NFR-7) — fan-out never touches Postgres or core.</li>
+<li>Order-status transitions (from Redpanda <code>order.*</code> events) are bridged onto the same channel so the tracking screen gets status + location on one socket.</li>
+<li>A worker downsamples positions (1/30 s) to the <code>rider_location</code> archive (partitioned Postgres table → warehouse) for SLA forensics and zone heatmaps.</li>
+<li>Degradation: socket loss → client falls back to HTTPS polling <code>GET /v1/orders/{id}/track</code> (served from Redis last-known position) — graceful degradation per NFR-3.</li>
+</ol>
+<h3 id="5e-flow-payment-webhook-reconciliation-auto-refund-fr-1014-br-4-brs-risk-3">5e. Flow: Payment webhook reconciliation + auto-refund (FR-10/14, BR-4, BRS risk #3)</h3>
+<ol>
+<li>Gateway (C-16) POSTs signed webhook → API gateway → payments-adapter; HMAC signature verified; raw payload persisted.</li>
+<li>Event upserted keyed on <code>gateway_payment_ref</code> + event type (unique constraint) — duplicates are no-ops; out-of-order events resolved by gateway timestamp precedence.</li>
+<li>State comparison: <strong>captured + order exists</strong> → confirm/no-op. <strong>Captured + no order</strong> (reservation failed or client died mid-flow 5a) → auto-refund initiated immediately. <strong>Failed/expired + reservation held</strong> → release stock, mark payment failed, notify customer to retry.</li>
+<li><strong>Reconciliation sweep</strong> (worker, every 5 min): queries all payments <code>PENDING</code> &gt; 15 min against the gateway's status API (webhook-loss cover); resolves per step 3; BR-3's 15-min unpaid hold released.</li>
+<li>Refunds (from step 3, cancellations per FR-14, and OOS lines per FR-30) create <code>refund</code> rows → gateway refund API with idempotency key = refund ID; refund webhooks close the loop; no manual approval below ₹2,000 (BR-4).</li>
+<li>A BR-4 SLA monitor alerts ops if any refund remains uninitiated ≥ 20 h (buffer before the 24 h promise); every money mutation lands in the audit log (NFR-10).</li>
+</ol>
+<h3 id="5f-nfr-architectural-mechanism-map">5f. NFR → architectural mechanism map</h3>
+<table>
+<thead>
+<tr>
+<th>NFR</th>
+<th>Target</th>
+<th>Mechanism</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>NFR-1</td>
+<td>Browse p95 &lt; 200 ms; search &lt; 300 ms</td>
+<td>Redis catalog cache + CDN images + Next.js ISR; Meilisearch for search; read replica for heavy admin reads</td>
+</tr>
+<tr>
+<td>NFR-2</td>
+<td>Order confirm p95 &lt; 3 s</td>
+<td>Single-transaction reservation (no distributed commit); all fan-out async via outbox; gateway intent pre-created at checkout</td>
+</tr>
+<tr>
+<td>NFR-3</td>
+<td>99.9% order path; graceful degradation</td>
+<td>Multi-AZ everything; realtime/worker isolation from core; tracking→polling fallback; non-critical modules (ratings, analytics) fail open</td>
+</tr>
+<tr>
+<td>NFR-4</td>
+<td>10× via scale-out only</td>
+<td>Stateless core/gateway/realtime pods behind HPA; pre-declared extraction seams (§4); partitioned hot tables; Kafka-API backbone swaps to managed Kafka</td>
+</tr>
+<tr>
+<td>NFR-5</td>
+<td>TLS, JWT+refresh rotation, AES-256 PII, no raw cards, ASVS L2</td>
+<td>§8: edge TLS 1.2+, RS256 15-min JWTs, hashed rotating refresh tokens, encrypted storage + column-level PII crypto, gateway tokenization only, ASVS L2 checklist gate in CI</td>
+</tr>
+<tr>
+<td>NFR-6</td>
+<td>DPDP, GST, PCI (via gateway)</td>
+<td>Consent records + deletion/anonymization workflow (§8); GST invoice generation at delivery (BR-10) with 8-yr retention; PCI SAQ-A posture — card data never touches GroFast</td>
+</tr>
+<tr>
+<td>NFR-7</td>
+<td>GPS ≤ 5 s; stock ≤ 60 s; feeds ≤ 15 min</td>
+<td>WS + Redis pub/sub path (5d); stock events → cache invalidation + Meili update ≤ 60 s; feed-freshness timestamps drive BR-6 degraded listing</td>
+</tr>
+<tr>
+<td>NFR-8</td>
+<td>Logs, traces, SLO alerts</td>
+<td>§9: structured JSON logs, OTel traces end-to-end on checkout/order path, multi-window burn-rate alerts, runbooks per alert</td>
+</tr>
+<tr>
+<td>NFR-9</td>
+<td>Cold start &lt; 3 s; offline grace</td>
+<td>React Native + Hermes, code-split admin; on-device cart/catalog cache with sync-on-reconnect; rider GPS offline buffer</td>
+</tr>
+<tr>
+<td>NFR-10</td>
+<td>100% money/stock mutations audited</td>
+<td>Audit module consumes <code>audit.*</code> outbox events (same transaction as mutation → cannot miss); append-only partitioned table, actor + reason mandatory in the domain-event schema</td>
+</tr>
+</tbody>
+</table></div></section>
+<section class="tab-panel" id="tab-5" data-title="Database"><div class='panel'><h2>6. Database design (high-level)</h2><p><em>Detailed ER + tables go below. Keep this section to "what data lives where."</em></p>
+<ul>
+<li><strong>Primary store:</strong> PostgreSQL 16 + PostGIS — all entities below, plus the transactional <code>outbox</code> table. One logical DB, schema-per-module (<code>auth.*</code>, <code>orders.*</code>, …) to make module ownership physical and future extraction cheap.</li>
+<li><strong>Secondary stores / caches:</strong> Redis (cart hot copy, catalog/serviceability cache, OTP + rate-limit counters, rider GEO set, pub/sub); Meilisearch (search projection of catalog × store availability); object storage (images, invoices, proofs, feed files).</li>
+<li><strong>Read replicas / analytics:</strong> 1 Postgres read replica (admin/report reads); Redpanda → warehouse (ClickHouse-class, [OPEN] with cloud) for FR-27 dashboards, daily digest, CSV export.</li>
+</ul>
+<h3 id="6a-entities-relationships">6a. Entities &amp; relationships</h3>
+<table>
+<thead>
+<tr>
+<th>Entity</th>
+<th>Owner service</th>
+<th>Key fields</th>
+<th>Relationships</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>user</td>
+<td>core/auth</td>
+<td>id, phone (unique, encrypted), name, status, consent_flags, created_at</td>
+<td>1—N address, cart, order; role links for staff/partner users</td>
+</tr>
+<tr>
+<td>address</td>
+<td>core/auth</td>
+<td>id, user_id, label, line1, landmark, geo point, zone_id (resolved)</td>
+<td>N—1 user; N—1 zone</td>
+</tr>
+<tr>
+<td>zone</td>
+<td>core/serviceability</td>
+<td>id, name, polygon (PostGIS geometry), eta_params, active</td>
+<td>N—M store via store_zone; contains addresses by <code>ST_Contains</code></td>
+</tr>
+<tr>
+<td>store</td>
+<td>core/serviceability</td>
+<td>id, type (dark/partner), name, geo point, address, status, partner_id?, commission_pct?</td>
+<td>N—M zone; 1—N store_inventory, order; partner stores 1—1 partner_feed</td>
+</tr>
+<tr>
+<td>sku</td>
+<td>core/catalog</td>
+<td>id, name, brand, category_id, pack_size, mrp, images[], attributes JSONB, barcode</td>
+<td>1—N store_inventory, order_item; N—1 category</td>
+</tr>
+<tr>
+<td>store_inventory</td>
+<td>core/inventory</td>
+<td>(store_id, sku_id) unique, price, available_qty, reserved_qty, max_per_order, low_stock_threshold, source (grn/feed), updated_at</td>
+<td>N—1 store, sku; mutated only via inventory module (GRN/adjust/reserve/release)</td>
+</tr>
+<tr>
+<td>cart</td>
+<td>core/cart</td>
+<td>id, user_id, store_id, lines JSONB (sku, qty, price_snapshot), coupon_code?, updated_at</td>
+<td>N—1 user, store (BR-1: single store); hot copy in Redis, PG durable</td>
+</tr>
+<tr>
+<td>order</td>
+<td>core/orders</td>
+<td>id, user_id, store_id, address snapshot, state, eta_promised_at (BR-2), eta_actual_at, bill JSONB, payment_method, invoice_ref, cancelled_reason?</td>
+<td>1—N order_item; 1—N payment, refund; 1—1 active assignment; N—1 user, store</td>
+</tr>
+<tr>
+<td>order_item</td>
+<td>core/orders</td>
+<td>id, order_id, sku_id, qty, unit_price, gst_breakup, fulfillment_status (picked/substituted/refunded)</td>
+<td>N—1 order, sku</td>
+</tr>
+<tr>
+<td>payment</td>
+<td>core/payments</td>
+<td>id, order_id?, checkout_session_id, gateway, gateway_payment_ref (unique), method, amount, status, raw_webhook_refs</td>
+<td>N—1 order (nullable until order created); 1—N refund</td>
+</tr>
+<tr>
+<td>refund</td>
+<td>core/payments</td>
+<td>id, payment_id, order_id, amount, reason, status, initiated_at, sla_deadline (BR-4), gateway_refund_ref</td>
+<td>N—1 payment</td>
+</tr>
+<tr>
+<td>rider</td>
+<td>core/dispatch</td>
+<td>id, phone (unique), name, kyc_status, vehicle, online_status, active_assignment_id?, cod_float</td>
+<td>1—N assignment; live position in Redis GEO</td>
+</tr>
+<tr>
+<td>rider_location</td>
+<td>core/dispatch (archive)</td>
+<td>rider_id, order_id?, geo point, recorded_at — day-partitioned, downsampled</td>
+<td>N—1 rider; source of SLA forensics</td>
+</tr>
+<tr>
+<td>assignment</td>
+<td>core/dispatch</td>
+<td>id, order_id, rider_id, state (offered/accepted/declined/expired/completed), offered_at, ttl, pickup_verified_at, proof_ref (photo/OTP), cod_collected?</td>
+<td>N—1 order, rider; proof blob in object storage (BR-8)</td>
+</tr>
+<tr>
+<td>partner_feed</td>
+<td>core/partner-feeds</td>
+<td>id, store_id, mode (api/csv), last_ingested_at, freshness_status (BR-6), row_counts, rejection_report_ref</td>
+<td>1—1 partner store; drives degraded-listing flag</td>
+</tr>
+<tr>
+<td>coupon</td>
+<td>core/pricing</td>
+<td>id, code (unique), type (flat/percent), value, min_cart, max_discount, validity, usage_limits, active</td>
+<td>Referenced by cart/order bill; redemption counter per user</td>
+</tr>
+<tr>
+<td>notification</td>
+<td>core/notifications</td>
+<td>id, user_id/rider_id, order_id?, channel (push/sms), template_id (DLT-registered), status, sent_at, fallback_of?</td>
+<td>N—1 order; delivery-failure → fallback row (FR-28)</td>
+</tr>
+<tr>
+<td>audit_event</td>
+<td>core/audit</td>
+<td>id, actor (user/staff/system), actor_role, action, entity_type+id, before/after JSONB, reason, at — <strong>append-only</strong></td>
+<td>Written via outbox consumer; covers 100% money/stock mutations (NFR-10)</td>
+</tr>
+<tr>
+<td>outbox</td>
+<td>core/orders (shared infra)</td>
+<td>id, aggregate, event_type, payload JSONB, created_at, published_at?</td>
+<td>Written in-transaction with every state change; relayed to Redpanda</td>
+</tr>
+</tbody>
+</table>
+<h3 id="6b-indexes-partitioning">6b. Indexes / partitioning</h3>
+<ul>
+<li><code>store_inventory</code>: PK (store_id, sku_id); partial index <code>WHERE available_qty &lt;= low_stock_threshold</code> for alerting.</li>
+<li><code>order</code>: (user_id, created_at DESC); partial indexes per active state for picker/dispatch/exception queues; (store_id, state).</li>
+<li><code>payment</code>: unique (gateway_payment_ref); (status, created_at) for the reconciliation sweep.</li>
+<li><code>zone.polygon</code>: GIST index — serviceability point-in-polygon (FR-3) sub-ms.</li>
+<li><code>rider_location</code>: native range partitioning by day; <code>audit_event</code> and <code>outbox</code> partitioned by month; <code>outbox</code> partial index <code>WHERE published_at IS NULL</code>.</li>
+<li><code>sku</code>: GIN on attributes JSONB; trigram index on name only as Meili fallback.</li>
+</ul>
+<h3 id="6c-retention-archival">6c. Retention / archival</h3>
+<ul>
+<li>Orders, order_items, payments, refunds, invoices: <strong>8 years</strong> (GST record-keeping), cold-archived to object storage after 18 months.</li>
+<li><code>audit_event</code>: 7 years, append-only, partitions archived to object storage yearly.</li>
+<li><code>rider_location</code> raw: 30 days in PG; downsampled aggregates permanent in warehouse.</li>
+<li>OTP and notification delivery logs: 90 days. Partner feed files: 90 days.</li>
+<li>DPDP deletion (NFR-6): user PII anonymized in place (phone/name/address → tombstone hashes); financial and audit records retained per statutory basis, documented in the consent notice.</li>
+</ul></div></section>
+<section class="tab-panel" id="tab-6" data-title="Hosting"><div class='panel'><h2>7. Hosting &amp; infrastructure</h2><p><em>Concrete: which provider, which services, what the deployment topology looks like.</em></p>
+<ul>
+<li><strong>Cloud provider:</strong> <strong>[OPEN]</strong> — AWS-class assumed (BRS §13, owner: Eng lead, due before this doc freezes). All choices below are vendor-portable (K8s, Postgres, Redis, Kafka API, S3-compatible storage).</li>
+<li><strong>Region(s):</strong> Single India region (Mumbai or Delhi/Hyderabad equivalent), <strong>3 AZs</strong>. Multi-region deferred (see §11).</li>
+<li><strong>Compute:</strong> Managed Kubernetes; node pools: <code>general</code> (core, gateway, workers), <code>realtime</code> (WS pods, network-optimized). HPA on CPU + custom metrics (socket count, consumer lag).</li>
+<li><strong>Storage:</strong> Managed Postgres (multi-AZ, PITR) + 1 read replica; managed Redis (HA pair); Redpanda 3-node StatefulSet (SSD PVs) — revisit managed Kafka once vendor lands; S3-compatible object storage; warehouse [OPEN].</li>
+<li><strong>Edge / CDN:</strong> CDN for static/web/images; WAF + global rate limits (OTP endpoints especially) at edge; TLS 1.2+ terminated at edge, re-encrypted to cluster.</li>
+<li><strong>Networking:</strong> VPC with public subnets (LB only), private subnets (cluster + data), isolated data subnets; NAT for egress (gateway/SMS/FCM calls); no data store publicly reachable.</li>
+<li><strong>Environments:</strong> dev, staging, prod</li>
+<li><strong>Per-env config strategy:</strong> Terraform workspaces per env; K8s config via sealed/external secrets from cloud secret manager; 12-factor env injection; no secrets in git; staging runs gateway sandbox + test DLT templates.</li>
+</ul>
+<h3 id="7a-hosting-topology">7a. Hosting topology</h3>
+<table>
+<thead>
+<tr>
+<th>Component</th>
+<th>Where it runs</th>
+<th>Scaling strategy</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>grofast-core</code></td>
+<td>K8s Deployment, <code>general</code> pool, ≥ 3 replicas across AZs</td>
+<td>HPA on CPU + p95 latency; stateless</td>
+</tr>
+<tr>
+<td>Realtime gateway</td>
+<td>K8s Deployment, <code>realtime</code> pool, ≥ 2 replicas</td>
+<td>HPA on concurrent-socket count; sticky-less (Redis pub/sub)</td>
+</tr>
+<tr>
+<td>Worker pool</td>
+<td>K8s Deployment per consumer group</td>
+<td>KEDA-style scale on Redpanda consumer lag</td>
+</tr>
+<tr>
+<td>API gateway / ingress</td>
+<td>Cloud LB + ingress controller</td>
+<td>Managed / horizontal</td>
+</tr>
+<tr>
+<td>Postgres + PostGIS</td>
+<td>Managed service, multi-AZ primary + replica</td>
+<td>Vertical first; replica for reads; partitioning already in place</td>
+</tr>
+<tr>
+<td>Redis</td>
+<td>Managed HA pair</td>
+<td>Vertical + cluster mode at 10×</td>
+</tr>
+<tr>
+<td>Meilisearch</td>
+<td>K8s StatefulSet (1 primary + replica)</td>
+<td>Replica reads; swap to OpenSearch at 10×</td>
+</tr>
+<tr>
+<td>Redpanda</td>
+<td>K8s StatefulSet, 3 nodes, 3 AZs</td>
+<td>Add brokers/partitions; or migrate to managed Kafka</td>
+</tr>
+<tr>
+<td>Customer web (Next.js)</td>
+<td>K8s or edge/CDN-adjacent nodes</td>
+<td>HPA; ISR pages served from CDN</td>
+</tr>
+<tr>
+<td>Admin SPA, static assets</td>
+<td>Object storage + CDN</td>
+<td>n/a</td>
+</tr>
+<tr>
+<td>Warehouse</td>
+<td>[OPEN] with cloud vendor</td>
+<td>n/a at V1 volume</td>
+</tr>
+</tbody>
+</table></div></section>
+<section class="tab-panel" id="tab-7" data-title="Auth &amp; security"><div class='panel'><h2>8. Auth &amp; security</h2><ul>
+<li><strong>AuthN:</strong> Customers &amp; riders: phone-OTP (DLT SMS, 6-digit, 3/min + 10/day rate caps, constant-time compare) → access JWT (RS256, 15 min) + refresh token (30 d, rotating, hashed at rest, reuse-detection revokes the family). Riders additionally device-bound (device ID claim). Admin/ops/partner staff: email + password (argon2) + mandatory TOTP; shorter sessions (8 h).</li>
+<li><strong>AuthZ:</strong> RBAC per FR-29 — roles: <code>ops</code>, <code>catalog</code>, <code>finance</code>, <code>partner</code>, <code>read-only</code>, <code>super-admin</code>; permissions enforced server-side in a gateway/core guard layer (never client-side only); partner users row-scoped to their own store; denied attempts audit-logged (FR-29 AC). Rider/customer tokens carry audience claims so a rider token can never call customer or admin APIs.</li>
+<li><strong>Secrets management:</strong> Cloud secret manager as source of truth → synced to K8s via external-secrets; per-env gateway keys and webhook HMAC secrets; quarterly rotation; JWT signing keys rotated with <code>kid</code> overlap.</li>
+<li><strong>PII handling:</strong> TLS 1.2+ everywhere (edge→cluster re-encrypted); AES-256 at rest (disk level) + column-level encryption for phone/address; phone lookup via deterministic HMAC index. <strong>DPDP:</strong> explicit consent capture at signup (versioned consent records on <code>user</code>), purpose-limited processing, user-initiated data deletion → anonymization workflow (§6c) with statutory carve-outs disclosed; data stays in-region. <strong>PCI:</strong> SAQ-A posture — all card/UPI collection via gateway tokenization (C-16); GroFast never receives raw instrument data; annual gateway attestation filed (NFR-6).</li>
+<li><strong>Threat model summary:</strong> Top risks and controls — (1) OTP abuse/SMS-pump: edge rate limits, per-number and per-IP caps, silent device checks; (2) webhook forgery/replay: HMAC verification + timestamp window + idempotent upsert; (3) payment/refund tampering: server-side amount verification against gateway, no client-trusted totals, BR-4 monitor; (4) privilege escalation in admin: RBAC guards + audit on every denied attempt; (5) rider GPS spoofing: pickup/drop OTP proofs (BR-8) as ground truth, anomaly flags to exception queue; (6) inventory manipulation: mutations only through inventory module APIs with mandatory reason + audit (FR-22). Whole surface held to <strong>OWASP ASVS L2</strong>: checklist tracked in CI, dependency + container scanning on every build, pre-launch external pen test (gate in Phase 8).</li>
+</ul></div></section>
+<section class="tab-panel" id="tab-8" data-title="Observability"><div class='panel'><h2>9. Observability &amp; ops</h2><ul>
+<li><strong>Logs:</strong> Structured JSON everywhere (request ID, trace ID, actor, module); shipped to Loki/cloud-native store; PII redaction at the logger layer; 30 d hot / 13 mo cold.</li>
+<li><strong>Metrics:</strong> Prometheus (RED per endpoint + module; business metrics first-class: orders/min, payment success rate, ETA hit rate, OOS-after-order rate, feed freshness, consumer lag, socket count); Grafana dashboards mirroring BRS Objectives table.</li>
+<li><strong>Traces:</strong> OpenTelemetry SDK across gateway → core modules → workers; <strong>100% sampling on the order path</strong> (checkout, reservation, payment, dispatch), 10% elsewhere; trace ID propagated into outbox events so async legs stitch to the originating checkout.</li>
+<li><strong>Alerting:</strong> SLO-based multi-window burn-rate alerts on NFR-1/2/3 targets; hard alerts: payment-success &lt; 95% (15 min), reconciliation backlog &gt; 0 aged 30 min, refund SLA monitor (BR-4, ≥ 20 h), consumer lag thresholds, feed staleness fleet-wide, cert/quota expiry.</li>
+<li><strong>On-call:</strong> Single rotation at launch (eng lead + 2), PagerDuty-class paging; every alert links a runbook (NFR-8); weekly SLO review feeding the ETA recalibration loop (BRS risk #4); Sev-1 = order path or money incident, postmortem mandatory.</li>
+</ul></div></section>
+<section class="tab-panel" id="tab-9" data-title="Migrations"><div class='panel'><h2>10. Migrations &amp; versioning</h2><ul>
+<li><strong>DB migration tooling:</strong> SQL-first, forward-only migrations (Flyway/dbmate-class) versioned in-repo, applied as a pre-deploy job with advisory locks; expand-migrate-contract pattern for zero-downtime changes; no destructive migration in the same release as its code change.</li>
+<li><strong>API versioning strategy:</strong> URI-versioned <code>/v1/*</code>; additive (non-breaking) changes within v1; breaking changes require <code>/v2</code> + deprecation window. Mobile clients call a <code>min-supported-version</code> config endpoint at startup → soft/hard force-update, since app-store rollout lag makes old clients immortal.</li>
+<li><strong>Backwards compatibility policy:</strong> Server must support the two most recent released mobile client versions; event schemas on Redpanda are versioned (schema field in envelope), consumers tolerate unknown fields; deprecations announced in the decision log with a dated removal.</li>
+</ul></div></section>
+<section class="tab-panel" id="tab-10" data-title="Backup &amp; DR"><div class='panel'><h2>11. Backup, retention, DR</h2><ul>
+<li><strong>Backups:</strong> Postgres continuous WAL archiving + daily snapshots (PITR), 35 d window, weekly restore drill into staging; Redis daily snapshot (acceptable loss — cache/ephemeral, carts durable in PG); Redpanda topics have object-storage tiered retention (7 d hot); object storage versioned + lifecycle rules; Terraform state versioned and locked.</li>
+<li><strong>RTO / RPO targets:</strong> Order path: <strong>RPO ≤ 5 min</strong> (WAL), <strong>RTO ≤ 1 h</strong> (managed failover is minutes; 1 h covers full-restore worst case). Analytics/warehouse: RPO 24 h, RTO best-effort — explicitly non-critical.</li>
+<li><strong>DR plan:</strong> V1 = <strong>in-region, multi-AZ</strong> HA (AZ loss is transparent); full region loss = restore-from-backup into an alternate India region via Terraform (documented, drilled once pre-launch, hours-scale) — accepted risk at V1 scale, revisit at multi-city (FU-5). Kill switches: feature flags to shed non-critical load (ratings, analytics ingestion, partner ingestion) protecting the order path (NFR-3); COD-only degraded mode if the payment gateway is down.</li>
+</ul></div></section>
+<section class="tab-panel" id="tab-11" data-title="Open items"><div class='panel'><h2>12. Open items</h2><ul>
+<li>[ ] <strong>Cloud vendor</strong> (AWS/GCP-class) — owner: Eng lead (TBD)/Devendra Sharma — carried from BRS §13; blocks region names, warehouse choice, managed-Kafka option. Needed before <code>/architecture-freeze</code>.</li>
+<li>[ ] <strong>Payment gateway vendor</strong> (Razorpay-class, PCI-DSS L1) — owner: Lead/Finance — carried from BRS §13; payments-adapter port is written gateway-agnostic so integration work, not architecture, is blocked.</li>
+<li>[ ] <strong>COD in V1 confirm</strong> — owner: Devendra Sharma + Finance — carried from BRS §13; flow 5a step 9, rider COD float + reconciliation report scoped but gated. Due before <code>/tasks-freeze</code>.</li>
+<li>[ ] <strong>Maps/geo provider</strong> (Google Maps vs Ola Maps/MapmyIndia-class; pricing at tracking volume) — owner: Eng lead — affects C-19 SDK choice in both apps.</li>
+<li>[ ] <strong>Analytics warehouse engine</strong> (ClickHouse self-hosted vs cloud-native warehouse) — owner: Eng lead — decide with cloud vendor; Redpanda sink keeps this swappable.</li>
+<li>[ ] <strong>SMS/DLT provider + template registration</strong> — owner: Ops/Lead — 2–4 week lead time (BRS §10); template IDs needed for notifications module config, not for design.</li>
+<li>[ ] <strong>Rider app distribution</strong> (Play Store vs private/MDM distribution for faster iteration) — owner: Ops + Eng lead.</li>
+</ul></div></section>
+</main>
+
+<footer class="doc-footer">
+  Generated by <code>render_architecture_html.py</code> from <code>02b_architecture.md</code>.
+  The canonical source remains the Markdown — this HTML is a human-readable render.
+</footer>
+
+<script>
+  (function () {
+    var nav = document.getElementById('tabs');
+    var panels = document.querySelectorAll('section.tab-panel');
+    panels.forEach(function (p, i) {
+      var btn = document.createElement('button');
+      btn.textContent = p.dataset.title;
+      btn.dataset.target = p.id;
+      if (i === 0) { btn.classList.add('active'); p.classList.add('active'); }
+      btn.addEventListener('click', function () {
+        document.querySelectorAll('nav.tabs button').forEach(function (b) { b.classList.remove('active'); });
+        document.querySelectorAll('section.tab-panel').forEach(function (s) { s.classList.remove('active'); });
+        btn.classList.add('active');
+        document.getElementById(btn.dataset.target).classList.add('active');
+      });
+      nav.appendChild(btn);
+    });
+  })();
+</script>
+</body>
+</html>

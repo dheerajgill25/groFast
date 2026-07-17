@@ -1,0 +1,22 @@
+{"ts":"2026-07-10T07:22:19Z","event":"project_created","project_id":"grofast","project_name":"GroFast","type":"greenfield","by":"Devendra Sharma"}
+{"ts":"2026-07-10T07:27:51Z","event":"phase_started","phase":"00_kb","by":"Devendra Sharma","artifact_md":"project-docs/00_kb.md"}
+{"ts":"2026-07-10T07:27:51Z","event":"phase_frozen","phase":"00_kb","by":"Devendra Sharma","artifact_md":"project-docs/00_kb.md","duration_minutes":0}
+{"ts":"2026-07-10T07:28:10Z","event":"phase_started","phase":"01_brs","artifact_md":"project-docs/01_brs.md"}
+{"ts":"2026-07-10T07:34:46Z","event":"phase_frozen","phase":"01_brs","by":"Devendra Sharma","artifact_md":"project-docs/01_brs.md","artifact_human":"project-docs/_readable/01_brs.pdf","duration_minutes":6}
+{"ts":"2026-07-10T07:35:00Z","event":"phase_started","phase":"02a_screens","artifact_md":"project-docs/02a_screens.md","thread":"design"}
+{"ts":"2026-07-10T07:35:01Z","event":"phase_started","phase":"02b_architecture","artifact_md":"project-docs/02b_architecture.md","thread":"build"}
+{"ts":"2026-07-10T07:46:40Z","event":"phase_frozen","phase":"02b_architecture","by":"Devendra Sharma","artifact_md":"project-docs/02b_architecture.md","artifact_human":"project-docs/_readable/02b_architecture.html","duration_minutes":11,"thread":"build"}
+{"ts":"2026-07-10T07:48:14Z","event":"phase_frozen","phase":"02a_screens","by":"Devendra Sharma","artifact_md":"project-docs/02a_screens.md","artifact_human":"project-docs/_readable/02a_screens.pdf","duration_minutes":13,"thread":"design"}
+{"ts":"2026-07-10T07:49:12Z","event":"phase_started","phase":"03a_designer_prompts","artifact_md":"project-docs/03a_designer_prompts.md","thread":"design"}
+{"ts":"2026-07-10T07:49:13Z","event":"phase_started","phase":"03b_test_cases","artifact_md":"project-docs/03b_test_cases.md","thread":"build"}
+{"ts":"2026-07-10T08:06:45Z","event":"phase_frozen","phase":"03a_designer_prompts","by":"Devendra Sharma","artifact_md":"project-docs/03a_designer_prompts.md","duration_minutes":17,"thread":"design"}
+{"ts":"2026-07-10T08:06:46Z","event":"phase_frozen","phase":"03b_test_cases","by":"Devendra Sharma","artifact_md":"project-docs/03b_test_cases.md","artifact_human":"project-docs/_readable/03b_test_cases.xlsx","duration_minutes":17,"thread":"build"}
+{"ts":"2026-07-10T08:53:25Z","event":"phase_started","phase":"04b_task_breakdown","artifact_md":"project-docs/04b_task_breakdown.md","thread":"build"}
+{"ts":"2026-07-10T08:53:26Z","event":"phase_started","phase":"04a_design","artifact_md":"project-docs/04a_design.md","thread":"design"}
+{"ts":"2026-07-10T08:55:04Z","event":"amendment_applied","file":"project-docs/01_brs.md","applied_by":"Devendra Sharma","reason":"Resolve \u00a713 open item: COD confirmed for V1 with BR-5 caps (decided 2026-07-10 at Phase 4 start)"}
+{"ts":"2026-07-17T09:36:18Z","event":"phase_frozen","phase":"04a_design","by":"Devendra Sharma","artifact_md":"project-docs/04a_design.md","duration_minutes":10122,"thread":"design"}
+{"ts":"2026-07-17T09:36:25Z","event":"phase_frozen","phase":"04b_task_breakdown","by":"Devendra Sharma","artifact_md":"project-docs/04b_task_breakdown.md","artifact_human":"project-docs/_readable/04b_task_breakdown.xlsx","duration_minutes":10123,"thread":"build"}
+{"ts":"2026-07-17T09:37:48Z","event":"phase_started","phase":"05_development","by":"Devendra Sharma"}
+{"ts":"2026-07-17T09:37:48Z","event":"briefs_generated","phase":"05_development"}
+{"ts":"2026-07-17T09:40:47Z","event":"feature_review_approved","by":"Devendra Sharma","scope":"theme","id":"E01-Th01"}
+{"ts":"2026-07-17T09:43:02Z","event":"feature_review_requested","scope":"theme","id":"E01-Th01"}

@@ -1,0 +1,9 @@
+{
+  "name": "@grofast/web",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Customer web storefront (Next.js) — screens SC-001..SC-020 web variants. Implemented in E06-Th02.",
+  "scripts": {
+    "test": "echo \"no tests yet — E06-Th02\" && exit 0"
+  }
+}
