@@ -1,0 +1,158 @@
+name: CI
+
+# Every PR into main, and every push to main, runs the full gate.
+# The acceptance bar for E01-Th01-S01 is "every PR runs lint + typecheck + unit
+# + (container build + scan) + integration". Container build/scan is its own
+# workflow (added by E01-Th01-S01-T04) so this file stays fast to iterate on.
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+# A newer push to the same branch cancels the older run — saves minutes on
+# rapid iteration without losing signal on the latest commit.
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  # Single source of truth for the toolchain. Bump here, not in ten places.
+  NODE_VERSION: '20'
+  PNPM_VERSION: '9'
+
+jobs:
+  # ---------------------------------------------------------------------------
+  # Fast static gate — no services needed, fails in ~1 min if the basics break.
+  # ---------------------------------------------------------------------------
+  static:
+    name: Lint · typecheck · build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: ${{ env.PNPM_VERSION }}
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: pnpm
+
+      - name: Install (frozen lockfile)
+        # --frozen-lockfile makes CI fail if pnpm-lock.yaml is stale rather than
+        # silently resolving new versions. A green CI must mean "these exact deps".
+        run: pnpm install --frozen-lockfile
+
+      - name: Lint (incl. module-boundary rules)
+        run: pnpm lint
+
+      - name: Typecheck
+        run: pnpm typecheck
+
+      - name: Build
+        run: pnpm build
+
+  # ---------------------------------------------------------------------------
+  # Tests, incl. the boundary fixtures, against ephemeral Postgres + Redis.
+  # The services aren't used yet (no module persists), but wiring them now means
+  # every later module's integration tests inherit a ready harness instead of
+  # each task re-inventing it.
+  # ---------------------------------------------------------------------------
+  test:
+    name: Unit + integration tests
+    runs-on: ubuntu-latest
+    needs: static
+    services:
+      postgres:
+        image: postgis/postgis:16-3.4
+        env:
+          POSTGRES_USER: grofast
+          POSTGRES_PASSWORD: grofast
+          POSTGRES_DB: grofast_test
+        ports: ['5432:5432']
+        options: >-
+          --health-cmd "pg_isready -U grofast"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+      redis:
+        image: redis:7-alpine
+        ports: ['6379:6379']
+        options: >-
+          --health-cmd "redis-cli ping"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+    env:
+      DATABASE_URL: postgres://grofast:grofast@localhost:5432/grofast_test
+      REDIS_URL: redis://localhost:6379
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: ${{ env.PNPM_VERSION }}
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: pnpm
+
+      - name: Install (frozen lockfile)
+        run: pnpm install --frozen-lockfile
+
+      - name: Test with coverage
+        # Coverage gate thresholds are declared in vitest.config.ts, so `vitest
+        # run --coverage` fails the job if coverage drops below the floor.
+        run: pnpm test:coverage
+
+      - name: Upload coverage artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage
+          path: coverage/
+          retention-days: 7
+
+  # ---------------------------------------------------------------------------
+  # ASVS L2 evidence (TC-SEC-004). At this stage the automatable slice is:
+  # dependency audit + secret scan + the checklist manifest. Full IDOR/XSS/SQLi
+  # coverage grows with the modules that introduce those surfaces; the job is
+  # here from day one so security is a standing gate, not a pre-launch scramble.
+  # ---------------------------------------------------------------------------
+  security:
+    name: ASVS L2 evidence
+    runs-on: ubuntu-latest
+    needs: static
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: ${{ env.PNPM_VERSION }}
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: pnpm
+
+      - name: Install (frozen lockfile)
+        run: pnpm install --frozen-lockfile
+
+      - name: Dependency vulnerability audit
+        # High/critical advisories fail the PR. Moderate ones are surfaced but
+        # not blocking, to avoid a transitive-dep advisory wedging all delivery.
+        run: pnpm audit --audit-level high
+
+      - name: Secret scan (gitleaks)
+        uses: gitleaks/gitleaks-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: ASVS L2 checklist present
+        run: |
+          test -f code/security/asvs_l2.md \
+            || (echo "::error::ASVS L2 checklist missing at code/security/asvs_l2.md" && exit 1)
+          echo "ASVS L2 checklist found."

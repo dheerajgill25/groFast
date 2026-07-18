@@ -1,0 +1,10 @@
+# Every change needs review from the lead until named module owners exist
+# (pod composition is BRS §13, still open). As modules land, replace this with
+# per-path owners so review routes to the right person.
+*                               @dheerajgill25
+
+# Infra, CI, and security config are especially sensitive — same owner today,
+# but called out so the intent survives when ownership fans out.
+/.github/                       @dheerajgill25
+/code/security/                 @dheerajgill25
+/eslint.config.mjs              @dheerajgill25
