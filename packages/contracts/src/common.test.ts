@@ -1,5 +1,6 @@
+import { z } from 'zod';
 import { describe, expect, it } from 'vitest';
-import { paiseSchema, phoneSchema } from './common.js';
+import { pageSchema, paiseSchema, phoneSchema } from './common.js';
 import { healthResponseSchema } from './health.js';
 
 describe('paiseSchema', () => {
@@ -26,6 +27,24 @@ describe('phoneSchema — FR-1', () => {
     ["+919876543210' OR '1'='1", 'injection payload'],
   ])('rejects %s (%s)', (n) => {
     expect(() => phoneSchema.parse(n)).toThrow();
+  });
+});
+
+describe('pageSchema', () => {
+  const page = pageSchema(z.object({ id: z.string() }));
+
+  it('accepts a page with items and a cursor', () => {
+    const parsed = page.parse({ items: [{ id: 'a' }, { id: 'b' }], nextCursor: 'c2' });
+    expect(parsed.items).toHaveLength(2);
+    expect(parsed.nextCursor).toBe('c2');
+  });
+
+  it('accepts a final page with a null cursor', () => {
+    expect(page.parse({ items: [], nextCursor: null }).nextCursor).toBeNull();
+  });
+
+  it('rejects items that violate the element schema', () => {
+    expect(() => page.parse({ items: [{ id: 42 }], nextCursor: null })).toThrow();
   });
 });
 

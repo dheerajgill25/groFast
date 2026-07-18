@@ -1,0 +1,17 @@
+# gitleaks config for GroFast CI (E01-Th01-S01-T03).
+# Extends the bundled default ruleset; we only add allowlisting for the
+# obviously-fake credentials that live in test fixtures and CI service configs,
+# so the scan doesn't cry wolf on `grofast:grofast` in ci.yml.
+[extend]
+useDefault = true
+
+[allowlist]
+description = "Known-safe fixtures and local-only service credentials"
+paths = [
+  '''.*\.test\.ts$''',
+  '''.*/__fixture.*''',
+]
+regexes = [
+  # The ephemeral Postgres in CI uses this throwaway pair — not a secret.
+  '''postgres://grofast:grofast@''',
+]

@@ -1,0 +1,23 @@
+name: PR conventions
+
+# The lifecycle automation keys off the `[E##-Th##-S##-T##] ...` PR-title format
+# (that's how /task-complete and the sprint board stay in sync). CI enforces it
+# so a mis-titled PR can't merge and silently break the trail.
+on:
+  pull_request:
+    types: [opened, edited, synchronize, reopened]
+
+jobs:
+  title:
+    name: PR title matches task-ID convention
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check title
+        env:
+          PR_TITLE: ${{ github.event.pull_request.title }}
+        run: |
+          if [[ ! "$PR_TITLE" =~ ^\[E[0-9]{2}-Th[0-9]{2}-S[0-9]{2}-T[0-9]{2}\]\ .+ ]]; then
+            echo "::error::PR title must be '[E##-Th##-S##-T##] <verb> <object>' (got: '$PR_TITLE')"
+            exit 1
+          fi
+          echo "Title OK: $PR_TITLE"
