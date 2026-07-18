@@ -65,7 +65,7 @@ make db-reset
 
 ## 8. Open follow-ups
 
-- [ ] [OPEN]
+- [ ] **T04 merged with two red security gates** (owner: Devendra, ETA: before any deploy work in E01-Th01-S02). The `Build & scan images` (Trivy) and `ASVS L2 evidence` (gitleaks) jobs were failing at merge time. Code, lint, typecheck, unit tests, and dependency audit all pass. Fixes are already committed on the T04 branch (Alpine `apk upgrade` for the base-image CVE; gitleaks run as a visible binary + broadened allowlist) but were not confirmed green before merge. **Verify both jobs pass on the next `main` run; if gitleaks still fails, read the now-verbose finding and allowlist the exact string.** These gates must be green before E01-Th01-S02 (deploy) lands.
 
 ## 9. Fix loop activity
 
