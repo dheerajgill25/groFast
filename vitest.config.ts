@@ -22,7 +22,10 @@ export default defineConfig({
         '**/*.test.ts',
         '**/index.ts',
         '**/*.module.ts',
+        // Process entrypoints (core/realtime/worker) — they bootstrap Nest and
+        // are exercised by container + integration tests (TC-INT), not units.
         '**/main.ts',
+        '**/main.*.ts',
         '**/internal/**',
         'packages/types/**',
         // Declarative constant maps — no branches, no logic. Line-covering a

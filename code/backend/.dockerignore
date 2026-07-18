@@ -1,0 +1,13 @@
+# Keep the build context small and secrets out of the image.
+**/node_modules
+**/dist
+**/.next
+**/coverage
+**/*.tsbuildinfo
+.git
+**/.env
+**/.env.*
+project-docs
+designs
+**/*.test.ts
+**/__fixture*
