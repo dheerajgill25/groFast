@@ -4,7 +4,7 @@
   "private": true,
   "description": "GroFast — hyperlocal quick-commerce grocery delivery platform",
   "engines": {
-    "node": ">=20.0.0",
+    "node": ">=22.0.0",
     "pnpm": ">=9.0.0"
   },
   "packageManager": "pnpm@9.15.9",

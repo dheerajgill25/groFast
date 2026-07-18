@@ -10,7 +10,7 @@
 # lands in E06-Th02; there is no web app to containerise yet.)
 
 # ---- deps: resolve the workspace with a frozen lockfile --------------------
-FROM node:20-alpine AS deps
+FROM node:22-alpine AS deps
 ENV PNPM_HOME=/pnpm
 ENV PATH=$PNPM_HOME:$PATH
 RUN corepack enable
@@ -34,7 +34,7 @@ RUN pnpm --filter @grofast/core... build
 RUN pnpm --filter @grofast/core --prod deploy /prod/backend
 
 # ---- runtime: minimal, non-root ------------------------------------------
-FROM node:20-alpine AS runtime
+FROM node:22-alpine AS runtime
 ENV NODE_ENV=production
 # Run as the built-in unprivileged `node` user, never root (ASVS L2 / NFR-5).
 WORKDIR /app
