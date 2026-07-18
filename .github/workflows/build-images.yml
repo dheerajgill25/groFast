@@ -59,7 +59,9 @@ jobs:
           output-file: sbom.spdx.json
 
       - name: Scan image (Trivy) — fail on HIGH/CRITICAL
-        uses: aquasecurity/trivy-action@0.28.0
+        # v-prefixed tags: the bare `0.x` tags were removed after the March 2026
+        # trivy-action tag-compromise incident. Pin to a v-tag (or a SHA).
+        uses: aquasecurity/trivy-action@v0.36.0
         with:
           image-ref: ${{ env.IMAGE }}:sha-${{ github.sha }}
           format: sarif
