@@ -2,7 +2,7 @@ name: Build & scan images
 
 # Container build + supply-chain scan (E01-Th01-S01-T04).
 # On PRs: build and scan only — proves the image is buildable and clean, no push.
-# On main: additionally push to GHCR and publish the SBOM as a release artifact.
+# On main: additionally push to GHCR and publish the SBOM as an artifact.
 on:
   pull_request:
     branches: [main]
@@ -13,10 +13,6 @@ concurrency:
   group: images-${{ github.ref }}
   cancel-in-progress: true
 
-env:
-  REGISTRY: ghcr.io
-  IMAGE: ghcr.io/${{ github.repository }}/backend
-
 jobs:
   backend-image:
     name: Backend image — build, SBOM, scan
@@ -24,37 +20,40 @@ jobs:
     permissions:
       contents: read
       packages: write # push to GHCR on main
+      security-events: write # upload SARIF to code scanning
     steps:
       - uses: actions/checkout@v4
 
       - uses: docker/setup-buildx-action@v3
 
-      # Tags: a stable :sha for traceability, plus :edge on main.
-      - name: Derive image metadata
-        id: meta
-        uses: docker/metadata-action@v5
-        with:
-          images: ${{ env.IMAGE }}
-          tags: |
-            type=sha,format=long
-            type=edge,enable=${{ github.ref == 'refs/heads/main' }}
+      # GHCR image names MUST be lowercase, but github.repository preserves the
+      # repo's original case (this repo is "groFast"). metadata-action lowercases
+      # its own tags silently, but any hand-built reference does not — so compute
+      # ONE lowercase ref here and use it everywhere. A deterministic :ci-<sha>
+      # tag is what the build loads and what SBOM + Trivy scan, so there is no
+      # chance of a tag mismatch between build and scan.
+      - name: Compute lowercase image ref
+        run: |
+          repo_lower="$(echo "${{ github.repository }}" | tr '[:upper:]' '[:lower:]')"
+          echo "IMAGE=ghcr.io/${repo_lower}/backend" >> "$GITHUB_ENV"
+          echo "SCAN_TAG=ghcr.io/${repo_lower}/backend:ci-${{ github.sha }}" >> "$GITHUB_ENV"
 
-      # Build once. Load into the local daemon so we can scan the exact bytes
-      # before any push. Push happens in a later step, only on main.
+      # Build once, load into the local daemon, scan those exact bytes before any
+      # push. Push happens later, only on main, only after a clean scan.
       - name: Build image (load for scanning)
         uses: docker/build-push-action@v6
         with:
           context: .
           file: code/backend/Dockerfile
           load: true
-          tags: ${{ steps.meta.outputs.tags }}
+          tags: ${{ env.SCAN_TAG }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
       - name: Generate SBOM (Syft)
         uses: anchore/sbom-action@v0
         with:
-          image: ${{ env.IMAGE }}:sha-${{ github.sha }}
+          image: ${{ env.SCAN_TAG }}
           format: spdx-json
           output-file: sbom.spdx.json
 
@@ -63,7 +62,7 @@ jobs:
         # trivy-action tag-compromise incident. Pin to a v-tag (or a SHA).
         uses: aquasecurity/trivy-action@v0.36.0
         with:
-          image-ref: ${{ env.IMAGE }}:sha-${{ github.sha }}
+          image-ref: ${{ env.SCAN_TAG }}
           format: sarif
           output: trivy.sarif
           severity: HIGH,CRITICAL
@@ -73,13 +72,15 @@ jobs:
           exit-code: '1'
 
       - name: Upload scan results to code scanning
-        if: always()
-        uses: github/codeql-action/upload-sarif@v3
+        # Only if Trivy actually produced a report — otherwise this step errors
+        # on a missing file and masks the real (earlier) failure.
+        if: always() && hashFiles('trivy.sarif') != ''
+        uses: github/codeql-action/upload-sarif@v4
         with:
           sarif_file: trivy.sarif
 
       - name: Upload SBOM artifact
-        if: always()
+        if: always() && hashFiles('sbom.spdx.json') != ''
         uses: actions/upload-artifact@v4
         with:
           name: backend-sbom
@@ -87,11 +88,21 @@ jobs:
           retention-days: 30
 
       # ---- push: main only, and only after a clean scan --------------------
+      - name: Derive push tags
+        if: github.ref == 'refs/heads/main'
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ${{ env.IMAGE }}
+          tags: |
+            type=sha,format=long
+            type=edge
+
       - name: Log in to GHCR
         if: github.ref == 'refs/heads/main'
         uses: docker/login-action@v3
         with:
-          registry: ${{ env.REGISTRY }}
+          registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
