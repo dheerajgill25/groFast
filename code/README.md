@@ -17,7 +17,7 @@ schema_version: "0.4"
 
 ## Prerequisites
 
-- Node ≥ 20
+- Node ≥ 22 (Node 20 is EOL as of April 2026)
 - pnpm ≥ 9 — `corepack enable && corepack prepare pnpm@9 --activate`
 
 ## Quick start

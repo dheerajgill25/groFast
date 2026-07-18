@@ -54,7 +54,14 @@ the standing ledger; it is never "done" until launch hardening (E08-Th02).
 - [ ] Rate limiting at the gateway
 - [ ] Webhooks verified by signature + idempotency key (payments, FR-10)
 
+## V10 — Malicious code / supply chain
+- [x] SBOM generated per image build (Syft, SPDX) — E01-Th01-S01-T04
+- [x] Container image scanned for HIGH/CRITICAL CVEs, fixable ones block the build
+      (Trivy) — E01-Th01-S01-T04
+- [x] Images run as non-root (`USER node`) — E01-Th01-S01-T04
+
 ## Automated in CI today
 - [x] Dependency vulnerability audit — high/critical block the PR
 - [x] Secret scanning (gitleaks) on every PR
 - [x] Module-boundary lint (limits blast radius of any one module, E01-Th01-S01-T02)
+- [x] SBOM + container CVE scan on every image build (E01-Th01-S01-T04)

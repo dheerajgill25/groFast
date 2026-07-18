@@ -14,4 +14,7 @@ paths = [
 regexes = [
   # The ephemeral Postgres in CI uses this throwaway pair — not a secret.
   '''postgres://grofast:grofast@''',
+  # …and its bare env-var form in the workflow service block.
+  '''(POSTGRES_(USER|PASSWORD|DB)|DATABASE_URL|REDIS_URL):\s*\S+''',
+  '''grofast(_test)?''',
 ]
