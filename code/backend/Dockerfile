@@ -36,6 +36,11 @@ RUN pnpm --filter @grofast/core --prod deploy /prod/backend
 # ---- runtime: minimal, non-root ------------------------------------------
 FROM node:22-alpine AS runtime
 ENV NODE_ENV=production
+# Pull the latest patched Alpine OS packages. The published node:22-alpine tag
+# lags behind Alpine's security updates, so its base layers carry fixable OS
+# CVEs (openssl, busybox, etc.) that fail the Trivy gate. `apk upgrade` clears
+# the fixable ones. (wget for the healthcheck is already provided by busybox.)
+RUN apk upgrade --no-cache
 # Run as the built-in unprivileged `node` user, never root (ASVS L2 / NFR-5).
 WORKDIR /app
 COPY --from=build --chown=node:node /prod/backend ./

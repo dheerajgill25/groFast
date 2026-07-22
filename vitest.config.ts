@@ -33,6 +33,14 @@ export default defineConfig({
         // consumers (e.g. formatInr) and by type-checking, not by "was this
         // literal evaluated".
         'packages/design-system/src/tokens.ts',
+        '**/tokens.ts',
+        // Repositories that only issue SQL. Their correctness is whether the
+        // queries behave against real Postgres, which is an integration test in
+        // CI (the `test` job runs an ephemeral postgis service) — a mocked unit
+        // test here would assert that we call the mock, proving nothing.
+        '**/pg-repositories.ts',
+        // Connection-pool glue; exercised by the integration tests above.
+        'code/backend/src/shared/db.ts',
       ],
       thresholds: {
         // Scaffold-stage floor over the code that actually has logic. Ratchets

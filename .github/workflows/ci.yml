@@ -50,11 +50,15 @@ jobs:
       - name: Lint (incl. module-boundary rules)
         run: pnpm lint
 
-      - name: Typecheck
-        run: pnpm typecheck
-
+      # Build BEFORE typecheck: packages consume each other through their
+      # emitted `dist` types (e.g. backend imports @grofast/contracts), so a
+      # typecheck on an unbuilt workspace fails with a bogus "cannot find
+      # module". Build first, then typecheck covers what build excludes (tests).
       - name: Build
         run: pnpm build
+
+      - name: Typecheck
+        run: pnpm typecheck
 
   # ---------------------------------------------------------------------------
   # Tests, incl. the boundary fixtures, against ephemeral Postgres + Redis.

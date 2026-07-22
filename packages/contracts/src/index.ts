@@ -26,3 +26,16 @@ export type { ApiErrorDto } from './common.js';
 
 export { healthResponseSchema } from './health.js';
 export type { HealthResponseDto } from './health.js';
+
+export {
+  requestOtpRequestSchema,
+  requestOtpResponseSchema,
+  verifyOtpRequestSchema,
+  verifyOtpResponseSchema,
+} from './auth.js';
+export type {
+  RequestOtpRequestDto,
+  RequestOtpResponseDto,
+  VerifyOtpRequestDto,
+  VerifyOtpResponseDto,
+} from './auth.js';
