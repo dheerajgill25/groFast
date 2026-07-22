@@ -1,5 +1,6 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
+import { AuthModule } from './modules/auth/auth.module.js';
 import { HealthController } from './shared/health.controller.js';
 
 /**
@@ -18,6 +19,7 @@ import { HealthController } from './shared/health.controller.js';
       // Secret management lands in E01-Th01-S02-T07.
       envFilePath: ['.env.local', '.env'],
     }),
+    AuthModule,
   ],
   controllers: [HealthController],
 })

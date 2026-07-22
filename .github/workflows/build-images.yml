@@ -57,6 +57,19 @@ jobs:
           format: spdx-json
           output-file: sbom.spdx.json
 
+      # Human-readable findings in the log — non-failing. Without this, the
+      # gating step below (format: sarif) prints nothing, so a failure gives no
+      # clue WHICH CVE broke the build. This step always shows them.
+      - name: Scan image (Trivy) — report to log
+        uses: aquasecurity/trivy-action@v0.36.0
+        with:
+          image-ref: ${{ env.SCAN_TAG }}
+          format: table
+          severity: HIGH,CRITICAL
+          ignore-unfixed: true
+          exit-code: '0'
+          skip-setup-trivy: true
+
       - name: Scan image (Trivy) — fail on HIGH/CRITICAL
         # v-prefixed tags: the bare `0.x` tags were removed after the March 2026
         # trivy-action tag-compromise incident. Pin to a v-tag (or a SHA).
@@ -70,6 +83,7 @@ jobs:
           # but don't wedge delivery on an upstream base-image CVE with no patch.
           ignore-unfixed: true
           exit-code: '1'
+          skip-setup-trivy: true
 
       - name: Upload scan results to code scanning
         # Only if Trivy actually produced a report — otherwise this step errors
