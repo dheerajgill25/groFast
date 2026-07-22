@@ -62,6 +62,7 @@ make db-reset
 | E01-Th01-S01-T01 | #1 | yes | TC-INT-021, TC-SEC-004 | yes |
 | E01-Th01-S01-T02 | #2 | yes | TC-INT-021, TC-SEC-004 | yes |
 | E01-Th01-S01-T03 | #3 | yes | TC-INT-021, TC-SEC-004 | yes |
+| E01-Th03-S01-T01 | #6 | yes | TC-FUNC-001, TC-NEG-001 | yes |
 
 ## 8. Open follow-ups
 
