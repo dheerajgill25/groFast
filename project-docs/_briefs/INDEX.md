@@ -1,6 +1,6 @@
 # Brief index — GroFast
 
-_Generated 2026-07-18T05:32:03Z._ Mode: **strict**.
+_Generated 2026-07-22T12:56:16Z._ Mode: **strict**.
 
 Read `00_PROJECT_OVERVIEW.md` once at session start, then this file to find the next eligible item, then the per-task / per-story brief.
 
@@ -36,7 +36,7 @@ Read `00_PROJECT_OVERVIEW.md` once at session start, then this file to find the 
 
 ### E01-Th03-S01 — As a customer/rider, I want to log in with my phone and an OTP, so that I never manage a password
 
-- ⏳ `E01-Th03-S01-T01` — User entity + OTP issue/verify  [inherit] deps: E01-Th01-S01-T02, E01-Th01-S02-T03
+- ✅ `E01-Th03-S01-T01` — User entity + OTP issue/verify  [inherit] deps: E01-Th01-S01-T02, E01-Th01-S02-T03
 - ⏳ `E01-Th03-S01-T02` — OTP abuse protection  [inherit] deps: E01-Th03-S01-T01, E01-Th01-S02-T06
 - ⏳ `E01-Th03-S01-T03` — JWT issue + refresh rotation with reuse detection  [inherit] deps: E01-Th03-S01-T01, E01-Th01-S02-T07
 - ⏳ `E01-Th03-S01-T04` — Audience claims + gateway auth guard  [inherit] deps: E01-Th03-S01-T03

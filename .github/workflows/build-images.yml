@@ -68,7 +68,6 @@ jobs:
           severity: HIGH,CRITICAL
           ignore-unfixed: true
           exit-code: '0'
-          skip-setup-trivy: true
 
       - name: Scan image (Trivy) — fail on HIGH/CRITICAL
         # v-prefixed tags: the bare `0.x` tags were removed after the March 2026
@@ -83,7 +82,6 @@ jobs:
           # but don't wedge delivery on an upstream base-image CVE with no patch.
           ignore-unfixed: true
           exit-code: '1'
-          skip-setup-trivy: true
 
       - name: Upload scan results to code scanning
         # Only if Trivy actually produced a report — otherwise this step errors
